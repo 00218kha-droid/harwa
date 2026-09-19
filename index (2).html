@@ -1,0 +1,2748 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المعهد العالي للعلوم والتقنية - هراوة</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&amp;family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --navy-900:#061a33; --navy-800:#0b2545; --navy-700:#13315c; --navy-600:#1b4079;
+  --accent:#00b4d8; --accent-2:#0096c7; --gold:#d4af37;
+  --bg:#f4f7fb; --white:#fff; --text:#0f172a; --muted:#5b6b83;
+  --border:#e3e9f2; --success:#16a34a; --danger:#dc2626; --warning:#f59e0b;
+}
+html { scroll-behavior:smooth; }
+body { font-family:'Tajawal','Inter',sans-serif; background:var(--bg); color:var(--text); line-height:1.7; overflow-x:hidden; }
+html[dir="ltr"] body { font-family:'Inter','Tajawal',sans-serif; }
+.container { max-width:1200px; margin:auto; padding:0 1.5rem; }
+
+header { position:fixed; top:0; right:0; left:0; background:rgba(255,255,255,.95); backdrop-filter:blur(14px); border-bottom:1px solid var(--border); z-index:1000; transition:all .3s; }
+header.scrolled { box-shadow:0 8px 30px rgba(11,37,69,.08); }
+nav { display:flex; align-items:center; justify-content:space-between; padding:.9rem 0; gap:1rem; }
+.brand { display:flex; align-items:center; gap:.75rem; text-decoration:none; color:var(--navy-800); }
+.brand-logo { width:46px; height:46px; border-radius:12px; background:linear-gradient(135deg,var(--navy-700),var(--accent)); display:grid; place-items:center; color:#fff; font-weight:900; font-size:1.05rem; box-shadow:0 6px 18px rgba(0,180,216,.3); flex-shrink:0; }
+.brand-text { display:flex; flex-direction:column; line-height:1.2; }
+.brand-text strong { font-size:.95rem; font-weight:800; }
+.brand-text small { font-size:.72rem; color:var(--muted); font-weight:500; }
+.nav-links { display:flex; gap:1.2rem; list-style:none; }
+.nav-links a { text-decoration:none; color:var(--navy-800); font-weight:500; font-size:.88rem; position:relative; transition:color .3s; }
+.nav-links a::after { content:''; position:absolute; bottom:-6px; right:0; width:0; height:2px; background:var(--accent); transition:width .3s; }
+.nav-links a:hover { color:var(--accent-2); } .nav-links a:hover::after { width:100%; }
+.nav-actions { display:flex; align-items:center; gap:.6rem; }
+.lang-switch { display:flex; background:var(--bg); border:1px solid var(--border); border-radius:50px; padding:3px; }
+.lang-switch button { border:none; background:transparent; padding:.35rem .8rem; border-radius:50px; font-family:inherit; font-weight:700; font-size:.8rem; cursor:pointer; color:var(--muted); transition:all .3s; }
+.lang-switch button.active { background:var(--navy-800); color:#fff; }
+.admin-btn { background:linear-gradient(135deg,var(--navy-800),var(--navy-600)); color:#fff; border:none; width:40px; height:40px; border-radius:12px; cursor:pointer; display:grid; place-items:center; font-size:1.1rem; transition:all .3s; box-shadow:0 4px 12px rgba(11,37,69,.2); }
+.admin-btn:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(11,37,69,.3); }
+.menu-toggle { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px; }
+.menu-toggle span { width:24px; height:2.5px; background:var(--navy-800); border-radius:3px; transition:.3s; }
+
+.btn { display:inline-flex; align-items:center; gap:.5rem; padding:.85rem 1.8rem; background:linear-gradient(135deg,var(--accent),var(--accent-2)); color:#fff; border:none; border-radius:12px; font-family:inherit; font-size:.95rem; font-weight:700; cursor:pointer; text-decoration:none; transition:transform .3s,box-shadow .3s; }
+.btn:hover { transform:translateY(-2px); box-shadow:0 12px 28px rgba(0,180,216,.35); }
+.btn-outline { background:transparent; border:1.5px solid rgba(255,255,255,.4); color:#fff; }
+.btn-outline:hover { background:rgba(255,255,255,.1); box-shadow:none; }
+.btn-excel { background:linear-gradient(135deg,#16a34a,#15803d); }
+.btn-excel:hover { box-shadow:0 12px 28px rgba(22,163,74,.35); }
+.btn-print { background:linear-gradient(135deg,var(--navy-700),var(--navy-600)); }
+.btn-print:hover { box-shadow:0 10px 25px rgba(11,37,69,.3); }
+.btn-danger { background:linear-gradient(135deg,#dc2626,#b91c1c); }
+.btn-danger:hover { box-shadow:0 12px 28px rgba(220,38,38,.35); }
+.btn-gold { background:linear-gradient(135deg,#d4af37,#b8941f); color:var(--navy-900); }
+.btn-gold:hover { box-shadow:0 12px 28px rgba(212,175,55,.35); }
+.btn-sm { padding:.55rem 1.1rem; font-size:.82rem; }
+
+.hero { min-height:82vh; display:flex; align-items:center; padding:8rem 0 4rem; background:radial-gradient(circle at 20% 30%,rgba(0,180,216,.22),transparent 45%),radial-gradient(circle at 80% 70%,rgba(212,175,55,.12),transparent 45%),linear-gradient(135deg,var(--navy-900),var(--navy-700)); color:#fff; position:relative; overflow:hidden; }
+.hero::before { content:''; position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px); background-size:60px 60px; pointer-events:none; }
+.hero-content { position:relative; z-index:1; max-width:780px; margin:auto; text-align:center; }
+.hero-badge { display:inline-block; padding:.45rem 1.1rem; background:rgba(0,180,216,.15); border:1px solid rgba(0,180,216,.35); border-radius:50px; font-size:.82rem; font-weight:600; color:#7ddfef; margin-bottom:1.5rem; }
+.hero h1 { font-size:clamp(2rem,5.5vw,3.5rem); font-weight:900; line-height:1.3; margin-bottom:1.2rem; }
+.hero h1 span { background:linear-gradient(135deg,var(--accent),var(--gold)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.hero p { font-size:clamp(1rem,2vw,1.1rem); color:rgba(255,255,255,.78); margin-bottom:2.5rem; max-width:620px; margin-inline:auto; }
+.hero-buttons { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+
+section.block { padding:5rem 0; }
+.section-head { text-align:center; margin-bottom:3rem; }
+.section-head .tag { display:inline-block; color:var(--accent-2); font-weight:700; font-size:.85rem; letter-spacing:1px; margin-bottom:.6rem; text-transform:uppercase; }
+.section-head h2 { font-size:clamp(1.7rem,4vw,2.4rem); font-weight:900; color:var(--navy-800); margin-bottom:.7rem; }
+.section-head p { color:var(--muted); max-width:620px; margin:auto; }
+
+.about-institute { background:#fff; }
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:3.5rem; align-items:center; }
+.about-visual { aspect-ratio:1; border-radius:28px; background:linear-gradient(135deg,var(--navy-700),var(--accent)); display:grid; place-items:center; font-size:6rem; box-shadow:0 25px 60px rgba(11,37,69,.25); position:relative; overflow:hidden; }
+.about-visual::before { content:''; position:absolute; inset:0; background-image:radial-gradient(circle at 30% 30%,rgba(255,255,255,.15),transparent 50%),radial-gradient(circle at 70% 70%,rgba(212,175,55,.15),transparent 50%); }
+.about-text h2 { font-size:clamp(1.6rem,4vw,2.2rem); font-weight:900; color:var(--navy-800); margin-bottom:1rem; line-height:1.35; }
+.about-text > p { color:var(--muted); margin-bottom:1.8rem; font-size:1rem; }
+.about-list { list-style:none; margin-bottom:2rem; }
+.about-list li { display:flex; align-items:flex-start; gap:.7rem; margin-bottom:.7rem; color:var(--text); font-size:.95rem; }
+.about-list li::before { content:'✓'; color:var(--accent-2); font-weight:900; flex-shrink:0; margin-top:2px; }
+.stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:1rem; margin-top:1rem; }
+.stat-card { background:var(--bg); border:1px solid var(--border); border-radius:18px; padding:1.3rem .8rem; text-align:center; transition:all .35s; position:relative; overflow:hidden; }
+.stat-card::before { content:''; position:absolute; top:0; right:0; left:0; height:3px; background:linear-gradient(90deg,var(--accent),var(--gold)); }
+.stat-card:hover { transform:translateY(-5px); box-shadow:0 15px 35px rgba(11,37,69,.1); border-color:transparent; }
+.stat-icon { font-size:1.6rem; margin-bottom:.4rem; }
+.stat-value { font-size:1.8rem; font-weight:900; background:linear-gradient(135deg,var(--navy-700),var(--accent)); -webkit-background-clip:text; background-clip:text; color:transparent; line-height:1; margin-bottom:.3rem; }
+.stat-label { font-size:.78rem; color:var(--muted); font-weight:600; }
+
+.dept-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1.5rem; }
+.dept-card { background:#fff; border:1px solid var(--border); border-radius:20px; padding:2rem 1.6rem; text-align:center; transition:all .35s; cursor:pointer; text-decoration:none; color:inherit; display:block; position:relative; overflow:hidden; }
+.dept-card::after { content:''; position:absolute; bottom:0; right:0; left:0; height:4px; background:linear-gradient(90deg,var(--accent),var(--navy-700)); transform:scaleX(0); transition:transform .35s; }
+.dept-card:hover { transform:translateY(-6px); box-shadow:0 20px 40px rgba(11,37,69,.1); border-color:transparent; }
+.dept-card:hover::after { transform:scaleX(1); }
+.dept-icon { width:64px; height:64px; margin:0 auto 1.1rem; border-radius:18px; display:grid; place-items:center; font-size:1.8rem; background:linear-gradient(135deg,rgba(0,180,216,.12),rgba(19,49,92,.12)); }
+.dept-card h3 { font-size:1.08rem; font-weight:800; color:var(--navy-800); margin-bottom:.4rem; }
+.dept-card p { font-size:.85rem; color:var(--muted); }
+
+.dept-section { padding:5rem 0; border-bottom:1px solid var(--border); }
+.dept-section:nth-child(even) { background:#fff; }
+.dept-section:last-of-type { border-bottom:none; }
+.dept-top { display:grid; grid-template-columns:100px 1fr; gap:1.5rem; align-items:center; margin-bottom:2.5rem; padding-bottom:2rem; border-bottom:2px solid var(--border); }
+.dept-top-icon { width:100px; height:100px; border-radius:24px; display:grid; place-items:center; font-size:3rem; background:linear-gradient(135deg,var(--navy-700),var(--accent)); color:#fff; box-shadow:0 15px 35px rgba(0,180,216,.3); flex-shrink:0; }
+.dept-top-text h2 { font-size:clamp(1.4rem,3.5vw,2rem); font-weight:900; color:var(--navy-800); margin-bottom:.4rem; }
+.dept-top-text p { color:var(--muted); font-size:.95rem; }
+.dept-about { background:linear-gradient(135deg,rgba(0,180,216,.05),rgba(19,49,92,.05)); border:1px solid var(--border); border-radius:20px; padding:2rem; margin-bottom:2.5rem; }
+.dept-about h3 { font-size:1.15rem; color:var(--navy-800); font-weight:800; margin-bottom:.9rem; display:flex; align-items:center; gap:.5rem; }
+.dept-about h3::before { content:'📖'; font-size:1.1rem; }
+.dept-about p { color:var(--text); font-size:.95rem; margin-bottom:1.2rem; line-height:1.8; }
+.dept-about-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:1.5rem; }
+.dept-about-box h4 { font-size:.95rem; font-weight:800; color:var(--navy-700); margin-bottom:.7rem; display:flex; align-items:center; gap:.4rem; }
+.dept-about-box h4::before { content:'✦'; color:var(--accent); }
+.dept-about-box ul { list-style:none; }
+.dept-about-box li { font-size:.88rem; color:var(--muted); padding:.35rem 0; padding-inline-start:1.1rem; position:relative; }
+.dept-about-box li::before { content:'▪'; color:var(--accent); position:absolute; inset-inline-start:0; font-weight:900; }
+
+.search-panel { max-width:820px; background:#fff; border:1px solid var(--border); border-radius:22px; padding:2rem; box-shadow:0 20px 45px rgba(11,37,69,.06); margin:0 auto 1.5rem; }
+.dept-section:nth-child(even) .search-panel { background:var(--bg); }
+.search-panel-title { text-align:center; font-weight:800; color:var(--navy-800); margin-bottom:1.2rem; font-size:1.05rem; display:flex; align-items:center; justify-content:center; gap:.5rem; }
+.search-panel-title::before { content:'🔍'; }
+.term-tabs { display:flex; gap:.4rem; flex-wrap:wrap; justify-content:center; margin-bottom:1.3rem; }
+.term-tab { padding:.55rem 1rem; border-radius:50px; border:1.5px solid var(--border); background:#fff; color:var(--navy-800); font-family:inherit; font-weight:700; font-size:.8rem; cursor:pointer; transition:all .3s; display:inline-flex; align-items:center; gap:.35rem; }
+.term-tab:hover { border-color:var(--accent); color:var(--accent-2); }
+.term-tab.active { background:linear-gradient(135deg,var(--navy-800),var(--navy-600)); color:#fff; border-color:var(--navy-800); box-shadow:0 6px 15px rgba(11,37,69,.2); }
+.term-tab .badge { background:rgba(0,180,216,.15); color:var(--accent-2); padding:1px 7px; border-radius:50px; font-size:.68rem; font-weight:800; }
+.term-tab.active .badge { background:rgba(0,180,216,.3); color:#fff; }
+.search-row { display:flex; gap:.75rem; flex-wrap:wrap; }
+.search-row input { flex:1; min-width:200px; padding:1rem 1.2rem; border:1.5px solid var(--border); border-radius:14px; font-family:inherit; font-size:1rem; background:#fff; transition:all .3s; text-align:center; letter-spacing:1px; }
+.search-row input:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 4px rgba(0,180,216,.12); }
+.search-row .btn { padding:1rem 2rem; }
+.result-area { max-width:820px; margin:1.5rem auto 0; }
+
+/* ============ رسالة القفل ============ */
+.results-locked-box {
+  max-width:820px;
+  margin:0 auto 1.5rem;
+  background:linear-gradient(135deg,#fff5f5,#fee2e2);
+  border:2px dashed #fca5a5;
+  border-radius:22px;
+  padding:3rem 2rem;
+  text-align:center;
+  animation:fadeUp .5s ease;
+  position:relative;
+  overflow:hidden;
+}
+.results-locked-box::before {
+  content:'';
+  position:absolute;
+  top:-50%; right:-50%;
+  width:200%; height:200%;
+  background:radial-gradient(circle,rgba(220,38,38,.05),transparent 60%);
+  pointer-events:none;
+}
+.results-locked-icon {
+  width:90px; height:90px;
+  margin:0 auto 1.2rem;
+  border-radius:50%;
+  background:linear-gradient(135deg,#dc2626,#b91c1c);
+  display:grid; place-items:center;
+  font-size:2.8rem;
+  color:#fff;
+  box-shadow:0 15px 40px rgba(220,38,38,.35);
+  animation:lockPulse 2s infinite;
+}
+@keyframes lockPulse {
+  0%,100% { transform:scale(1); box-shadow:0 15px 40px rgba(220,38,38,.35); }
+  50% { transform:scale(1.05); box-shadow:0 20px 50px rgba(220,38,38,.5); }
+}
+.results-locked-box h3 {
+  font-size:1.4rem;
+  font-weight:900;
+  color:#991b1b;
+  margin-bottom:.7rem;
+}
+.results-locked-box p {
+  font-size:.95rem;
+  color:#b91c1c;
+  max-width:500px;
+  margin:auto;
+  line-height:1.8;
+}
+.results-locked-badge {
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  margin-top:1.5rem;
+  padding:.6rem 1.3rem;
+  background:rgba(220,38,38,.1);
+  border:1px solid rgba(220,38,38,.25);
+  border-radius:50px;
+  color:#991b1b;
+  font-size:.82rem;
+  font-weight:800;
+}
+.results-locked-badge::before {
+  content:'';
+  width:8px; height:8px;
+  background:#dc2626;
+  border-radius:50%;
+  animation:lockBlink 1.5s infinite;
+}
+@keyframes lockBlink {
+  0%,100% { opacity:1; }
+  50% { opacity:.3; }
+}
+
+.result-card { background:#fff; border-radius:22px; overflow:hidden; border:1px solid var(--border); box-shadow:0 25px 55px rgba(11,37,69,.1); animation:fadeUp .5s ease; }
+.result-head { background:linear-gradient(135deg,var(--navy-800),var(--navy-600)); color:#fff; padding:1.6rem 2rem; display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; }
+.result-head h3 { font-size:1.2rem; font-weight:800; margin-bottom:.2rem; }
+.result-head p { font-size:.85rem; color:rgba(255,255,255,.75); }
+.dept-badge { background:rgba(0,180,216,.2); border:1px solid rgba(0,180,216,.4); color:#7ddfef; padding:.4rem .9rem; border-radius:50px; font-size:.78rem; font-weight:700; white-space:nowrap; }
+.result-table { width:100%; border-collapse:collapse; }
+.result-table th, .result-table td { padding:.9rem 1.5rem; text-align:start; font-size:.92rem; border-bottom:1px solid var(--border); }
+.result-table th { background:var(--bg); color:var(--muted); font-weight:700; font-size:.8rem; text-transform:uppercase; letter-spacing:.5px; }
+.result-table td:last-child { font-weight:700; color:var(--navy-800); text-align:end; }
+.result-table tbody tr:hover { background:rgba(0,180,216,.04); }
+.result-summary { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); }
+.result-summary > div { background:#fff; padding:1.3rem; text-align:center; }
+.result-summary span { display:block; font-size:.8rem; color:var(--muted); font-weight:600; margin-bottom:.3rem; }
+.result-summary strong { font-size:1.4rem; font-weight:900; color:var(--navy-800); }
+.result-summary .grade-pass { color:var(--success); }
+.result-summary .grade-fail { color:var(--danger); }
+.result-actions { display:flex; gap:.7rem; padding:1.2rem 1.5rem; background:var(--bg); border-top:1px solid var(--border); justify-content:center; flex-wrap:wrap; }
+.result-actions .btn { padding:.75rem 1.5rem; font-size:.88rem; }
+.result-term-switcher { display:flex; gap:.4rem; flex-wrap:wrap; padding:1rem 1.5rem; background:linear-gradient(135deg,rgba(0,180,216,.06),rgba(19,49,92,.06)); border-bottom:1px solid var(--border); }
+.result-term-switcher .switcher-label { font-size:.82rem; color:var(--muted); font-weight:700; align-self:center; margin-inline-end:.5rem; }
+.tm-btn { padding:.4rem .85rem; border-radius:50px; border:1.5px solid var(--border); background:#fff; font-family:inherit; font-size:.75rem; font-weight:700; cursor:pointer; color:var(--navy-800); transition:all .3s; }
+.tm-btn:hover { border-color:var(--accent); color:var(--accent-2); }
+.tm-btn.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+.message-box { text-align:center; padding:2.5rem 2rem; border-radius:22px; background:#fff; border:1px dashed var(--border); animation:fadeUp .5s ease; }
+.message-box .icon { font-size:2.5rem; margin-bottom:.8rem; display:block; }
+.message-box.error { border-color:#fecaca; background:#fef2f2; }
+.message-box.error .icon { color:var(--danger); }
+.message-box h3 { color:var(--navy-800); margin-bottom:.4rem; font-size:1.05rem; }
+.message-box p { color:var(--muted); font-size:.9rem; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(15px); } to { opacity:1; transform:translateY(0); } }
+
+.announcements { background:var(--bg); }
+.ann-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:1.8rem; }
+.ann-card { background:#fff; border:1px solid var(--border); border-radius:22px; overflow:hidden; transition:all .4s; display:flex; flex-direction:column; position:relative; }
+.ann-card:hover { transform:translateY(-6px); box-shadow:0 25px 50px rgba(11,37,69,.12); border-color:transparent; }
+.ann-media { width:100%; position:relative; background:linear-gradient(135deg,var(--navy-800),var(--navy-600)); overflow:hidden; aspect-ratio:16/9; }
+.ann-media img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s; }
+.ann-card:hover .ann-media img { transform:scale(1.05); }
+.ann-media.no-image { display:grid; place-items:center; font-size:4rem; color:rgba(255,255,255,.5); background:radial-gradient(circle at 30% 30%, rgba(0,180,216,.3), transparent 50%),radial-gradient(circle at 70% 70%, rgba(212,175,55,.2), transparent 50%),linear-gradient(135deg,var(--navy-900),var(--navy-700)); }
+.ann-media.video-media { padding:0; background:#000; }
+.ann-media video { width:100%; height:100%; object-fit:cover; display:block; }
+.ann-media iframe { width:100%; height:100%; border:none; display:block; }
+.ann-video-badge { position:absolute; top:1rem; inset-inline-start:1rem; background:rgba(220,38,38,.95); color:#fff; padding:.35rem .8rem; border-radius:50px; font-size:.7rem; font-weight:800; display:flex; align-items:center; gap:.3rem; backdrop-filter:blur(8px); box-shadow:0 6px 15px rgba(0,0,0,.3); z-index:2; }
+.ann-body { padding:1.5rem; flex:1; display:flex; flex-direction:column; }
+.ann-meta { display:flex; align-items:center; gap:.5rem; margin-bottom:.9rem; flex-wrap:wrap; }
+.ann-date-badge { display:inline-flex; align-items:center; gap:.35rem; background:var(--bg); border:1px solid var(--border); padding:.3rem .8rem; border-radius:50px; font-size:.75rem; font-weight:700; color:var(--navy-700); }
+.ann-date-badge::before { content:'📅'; font-size:.8rem; }
+.ann-tag { display:inline-block; font-size:.72rem; font-weight:800; padding:.3rem .85rem; border-radius:50px; background:linear-gradient(135deg,rgba(0,180,216,.15),rgba(19,49,92,.15)); color:var(--accent-2); border:1px solid rgba(0,180,216,.25); }
+.ann-body h3 { font-size:1.1rem; font-weight:800; color:var(--navy-800); margin-bottom:.7rem; line-height:1.45; }
+.ann-body p { font-size:.9rem; color:var(--muted); line-height:1.8; white-space:pre-wrap; flex:1; }
+
+footer { background:var(--navy-900); color:rgba(255,255,255,.65); padding:3.5rem 0 1.5rem; }
+.foot-grid { display:grid; grid-template-columns:1.5fr 1fr 1fr; gap:2.5rem; margin-bottom:2.5rem; }
+.foot-brand { display:flex; align-items:center; gap:.8rem; margin-bottom:1rem; }
+.foot-brand .brand-logo { width:42px; height:42px; }
+.foot-brand strong { color:#fff; font-size:.95rem; }
+.foot-col h4 { color:#fff; font-size:.95rem; font-weight:800; margin-bottom:1rem; }
+.foot-col p, .foot-col a { font-size:.87rem; color:rgba(255,255,255,.65); text-decoration:none; display:block; margin-bottom:.5rem; transition:color .3s; }
+.foot-col a:hover { color:var(--accent); }
+.foot-bottom { border-top:1px solid rgba(255,255,255,.1); padding-top:1.5rem; text-align:center; font-size:.82rem; }
+
+.modal-overlay { position:fixed; inset:0; background:rgba(6,26,51,.75); backdrop-filter:blur(6px); z-index:2000; display:none; align-items:center; justify-content:center; padding:1.5rem; animation:fadeIn .3s ease; }
+.modal-overlay.open { display:flex; }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+.admin-modal { background:#fff; border-radius:24px; max-width:1150px; width:100%; max-height:92vh; overflow-y:auto; box-shadow:0 30px 80px rgba(6,26,51,.4); animation:slideUp .4s ease; }
+@keyframes slideUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+.admin-modal-head { background:linear-gradient(135deg,var(--navy-900),var(--navy-700)); color:#fff; padding:1.5rem 2rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; border-radius:24px 24px 0 0; position:sticky; top:0; z-index:10; }
+.admin-modal-head h3 { font-size:1.15rem; font-weight:800; display:flex; align-items:center; gap:.6rem; }
+.admin-modal-head h3::before { content:'🛠️'; font-size:1.2rem; }
+.modal-close { background:rgba(255,255,255,.15); border:none; color:#fff; width:36px; height:36px; border-radius:10px; cursor:pointer; font-size:1.1rem; transition:background .3s; display:grid; place-items:center; }
+.modal-close:hover { background:rgba(255,255,255,.25); }
+.admin-modal-body { padding:2rem; }
+
+.login-screen { text-align:center; padding:1rem 0; }
+.login-screen .lock-icon { font-size:3rem; margin-bottom:1rem; display:block; }
+.login-screen h4 { font-size:1.2rem; font-weight:800; color:var(--navy-800); margin-bottom:.4rem; }
+.login-screen p { color:var(--muted); font-size:.9rem; margin-bottom:1.5rem; }
+.login-screen input { width:100%; max-width:320px; padding:1rem 1.2rem; border:1.5px solid var(--border); border-radius:14px; font-family:inherit; font-size:1rem; text-align:center; letter-spacing:2px; margin-bottom:1rem; transition:all .3s; }
+.login-screen input:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 4px rgba(0,180,216,.12); }
+.login-error { color:var(--danger); font-size:.85rem; margin-top:.8rem; min-height:20px; font-weight:600; }
+
+.admin-panel { display:none; }
+.admin-panel.active { display:block; }
+.admin-welcome { background:linear-gradient(135deg,rgba(0,180,216,.08),rgba(19,49,92,.08)); border:1px solid var(--border); border-radius:16px; padding:1.2rem 1.5rem; margin-bottom:1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+.admin-welcome p { font-size:.92rem; color:var(--navy-800); font-weight:600; }
+.admin-welcome .btn { padding:.55rem 1.2rem; font-size:.82rem; }
+
+.upload-tip { background:#fffbeb; border:1px solid #fde68a; border-radius:14px; padding:1rem 1.2rem; font-size:.85rem; color:#78350f; line-height:1.7; margin-bottom:1.5rem; }
+.upload-tip strong { display:block; margin-bottom:.4rem; color:#92400e; }
+.upload-tip code { background:#fff; padding:2px 6px; border-radius:4px; font-size:.8rem; color:#78350f; border:1px solid #fde68a; }
+
+.generate-bar { background:linear-gradient(135deg,var(--gold),#b8941f); border-radius:16px; padding:1.5rem; margin-bottom:1.5rem; color:var(--navy-900); display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap; box-shadow:0 10px 30px rgba(212,175,55,.3); }
+.generate-bar .gen-icon { width:60px; height:60px; border-radius:16px; background:rgba(255,255,255,.35); display:grid; place-items:center; font-size:1.8rem; flex-shrink:0; }
+.generate-bar .gen-text { flex:1; min-width:200px; }
+.generate-bar .gen-text strong { display:block; font-size:1.05rem; font-weight:900; margin-bottom:.3rem; }
+.generate-bar .gen-text p { font-size:.85rem; opacity:.85; line-height:1.6; }
+.generate-bar .btn { background:var(--navy-900); color:#fff; padding:.9rem 1.8rem; font-size:.92rem; font-weight:800; box-shadow:0 8px 20px rgba(6,26,51,.3); }
+.generate-bar .btn:hover { background:#000; box-shadow:0 12px 28px rgba(6,26,51,.4); }
+
+.admin-dept-tabs { display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:1.5rem; padding-bottom:1rem; border-bottom:2px solid var(--border); }
+.admin-dept-tab { padding:.7rem 1.3rem; border-radius:50px; border:1.5px solid var(--border); background:#fff; font-family:inherit; font-weight:800; font-size:.85rem; cursor:pointer; color:var(--navy-800); transition:all .3s; display:inline-flex; align-items:center; gap:.5rem; }
+.admin-dept-tab:hover { border-color:var(--accent); color:var(--accent-2); }
+.admin-dept-tab.active { background:linear-gradient(135deg,var(--navy-800),var(--navy-600)); color:#fff; border-color:var(--navy-800); box-shadow:0 6px 15px rgba(11,37,69,.2); }
+.admin-dept-tab.ann-tab.active { background:linear-gradient(135deg,#8b5cf6,#7c3aed); border-color:#8b5cf6; }
+
+.term-upload-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:1rem; margin-bottom:1.5rem; }
+.term-upload-card { background:#fff; border:2px dashed var(--border); border-radius:16px; padding:1.1rem; transition:all .3s; cursor:pointer; position:relative; }
+.term-upload-card:hover { border-color:var(--accent); background:rgba(0,180,216,.03); transform:translateY(-3px); }
+.term-upload-card.loaded { border-style:solid; border-color:#bbf7d0; background:linear-gradient(135deg,#f0fdf4,#dcfce7); cursor:default; }
+.term-upload-card.loaded:hover { transform:none; border-color:#bbf7d0; }
+.term-upload-card.changed { border-style:solid; border-color:#fcd34d; background:linear-gradient(135deg,#fffbeb,#fef3c7); }
+.term-upload-header { display:flex; align-items:center; gap:.7rem; margin-bottom:.8rem; }
+.term-upload-icon { width:44px; height:44px; border-radius:12px; background:linear-gradient(135deg,var(--navy-700),var(--accent)); display:grid; place-items:center; font-size:1.3rem; color:#fff; flex-shrink:0; box-shadow:0 6px 15px rgba(0,180,216,.2); }
+.term-upload-card.loaded .term-upload-icon { background:linear-gradient(135deg,#16a34a,#15803d); }
+.term-upload-card.changed .term-upload-icon { background:linear-gradient(135deg,#f59e0b,#d97706); }
+.term-upload-name { font-size:.92rem; font-weight:800; color:var(--navy-800); }
+.term-upload-status { font-size:.72rem; color:var(--muted); font-weight:600; margin-top:1px; }
+.term-file-info { background:#fff; border-radius:10px; padding:.6rem .8rem; margin-bottom:.7rem; border:1px solid #bbf7d0; }
+.term-upload-card.changed .term-file-info { border-color:#fcd34d; }
+.term-file-info .fname { font-size:.72rem; font-weight:700; color:var(--navy-800); word-break:break-all; display:flex; align-items:center; gap:.3rem; margin-bottom:.3rem; }
+.term-file-info .fname::before { content:'📄'; flex-shrink:0; }
+.term-file-info .frow { display:flex; justify-content:space-between; font-size:.68rem; color:var(--muted); }
+.term-file-info .frow strong { color:var(--accent-2); font-weight:800; }
+.term-cta { text-align:center; font-size:.75rem; font-weight:800; color:var(--accent-2); padding:.4rem .8rem; background:rgba(0,180,216,.1); border-radius:50px; }
+.term-actions { display:flex; gap:.35rem; justify-content:center; margin-top:.7rem; flex-wrap:wrap; }
+.mini-btn { padding:.4rem .75rem; border-radius:9px; border:none; font-family:inherit; font-size:.72rem; font-weight:700; cursor:pointer; transition:all .3s; display:inline-flex; align-items:center; gap:.25rem; }
+.mini-btn.primary { background:linear-gradient(135deg,var(--accent),var(--accent-2)); color:#fff; }
+.mini-btn.primary:hover { transform:translateY(-2px); box-shadow:0 6px 15px rgba(0,180,216,.3); }
+.mini-btn.danger { background:#fef2f2; color:var(--danger); border:1px solid #fecaca; }
+.mini-btn.danger:hover { background:#fee2e2; }
+.mini-btn.edit { background:linear-gradient(135deg,#8b5cf6,#7c3aed); color:#fff; }
+.mini-btn.edit:hover { transform:translateY(-2px); box-shadow:0 6px 15px rgba(139,92,246,.3); }
+
+.admin-grand-total { background:linear-gradient(135deg,var(--navy-800),var(--navy-600)); color:#fff; border-radius:16px; padding:1.2rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+.admin-grand-total .label { font-size:.9rem; font-weight:600; opacity:.9; }
+.admin-grand-total .value { font-size:1.6rem; font-weight:900; }
+.admin-dept-summary { background:var(--bg); border-radius:12px; padding:1rem 1.2rem; margin-bottom:1rem; display:flex; gap:1.5rem; flex-wrap:wrap; font-size:.82rem; align-items:center; }
+.admin-dept-summary .item { display:flex; align-items:center; gap:.4rem; }
+.admin-dept-summary .item strong { color:var(--accent-2); font-size:1rem; font-weight:800; }
+
+/* ============ زر إظهار/إخفاء النتائج ============ */
+.visibility-toggle {
+  margin-inline-start:auto;
+  display:inline-flex;
+  align-items:center;
+  gap:.6rem;
+  padding:.65rem 1.3rem;
+  border-radius:50px;
+  border:none;
+  font-family:inherit;
+  font-weight:800;
+  font-size:.82rem;
+  cursor:pointer;
+  transition:all .3s;
+  position:relative;
+  box-shadow:0 6px 15px rgba(0,0,0,.1);
+}
+.visibility-toggle .toggle-icon {
+  width:32px; height:32px;
+  border-radius:50%;
+  display:grid; place-items:center;
+  font-size:1rem;
+  background:rgba(255,255,255,.3);
+  flex-shrink:0;
+}
+.visibility-toggle.visible {
+  background:linear-gradient(135deg,#16a34a,#15803d);
+  color:#fff;
+}
+.visibility-toggle.visible:hover {
+  transform:translateY(-2px);
+  box-shadow:0 10px 25px rgba(22,163,74,.4);
+}
+.visibility-toggle.hidden {
+  background:linear-gradient(135deg,#dc2626,#b91c1c);
+  color:#fff;
+  animation:hiddenPulse 2s infinite;
+}
+.visibility-toggle.hidden:hover {
+  transform:translateY(-2px);
+  box-shadow:0 10px 25px rgba(220,38,38,.4);
+  animation:none;
+}
+@keyframes hiddenPulse {
+  0%,100% { box-shadow:0 6px 15px rgba(220,38,38,.2); }
+  50% { box-shadow:0 8px 25px rgba(220,38,38,.5); }
+}
+.visibility-toggle .toggle-text {
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  line-height:1.2;
+}
+.visibility-toggle .toggle-text small {
+  font-size:.68rem;
+  font-weight:600;
+  opacity:.85;
+}
+.visibility-toggle .toggle-text strong {
+  font-size:.82rem;
+  font-weight:900;
+}
+
+/* حالة مخفية في قسم البحث */
+.results-hidden-panel {
+  max-width:820px;
+  margin:0 auto 1.5rem;
+  background:linear-gradient(135deg,#fef2f2,#fee2e2);
+  border:1.5px solid #fca5a5;
+  border-radius:18px;
+  padding:1.3rem 1.5rem;
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  color:#991b1b;
+  font-size:.85rem;
+  font-weight:700;
+  line-height:1.5;
+}
+.results-hidden-panel .rh-icon {
+  width:44px; height:44px;
+  border-radius:12px;
+  background:#fff;
+  display:grid; place-items:center;
+  font-size:1.4rem;
+  flex-shrink:0;
+  box-shadow:0 4px 12px rgba(220,38,38,.15);
+}
+
+/* إعلان في الموقع عند إخفاء قسم معين */
+.dept-locked-overlay {
+  display:none;
+}
+
+.preview-overlay { position:fixed; inset:0; background:rgba(6,26,51,.85); backdrop-filter:blur(8px); z-index:3000; display:none; align-items:center; justify-content:center; padding:1.5rem; animation:fadeIn .3s ease; }
+.preview-overlay.open { display:flex; }
+.preview-modal { background:#fff; border-radius:20px; max-width:1000px; width:100%; max-height:92vh; overflow-y:auto; box-shadow:0 30px 80px rgba(6,26,51,.5); animation:slideUp .4s ease; }
+.preview-head { background:linear-gradient(135deg,var(--navy-800),var(--navy-600)); color:#fff; padding:1.3rem 1.8rem; display:flex; align-items:center; justify-content:space-between; border-radius:20px 20px 0 0; position:sticky; top:0; z-index:5; }
+.preview-head h3 { font-size:1.05rem; font-weight:800; display:flex; align-items:center; gap:.5rem; }
+.preview-head h3::before { content:'📊'; }
+.preview-body { padding:1.8rem; }
+.preview-step { background:#fff; border:1px solid var(--border); border-radius:16px; padding:1.3rem 1.5rem; margin-bottom:1.3rem; }
+.preview-step h4 { font-size:.95rem; font-weight:800; color:var(--navy-800); margin-bottom:.8rem; display:flex; align-items:center; gap:.5rem; }
+.step-num { display:inline-grid; place-items:center; width:24px; height:24px; border-radius:50%; background:var(--accent); color:#fff; font-size:.75rem; font-weight:900; flex-shrink:0; }
+.file-info-box { background:var(--bg); padding:1rem 1.3rem; border-radius:12px; font-size:.88rem; display:flex; gap:1.5rem; flex-wrap:wrap; }
+.file-info-box div { display:flex; align-items:center; gap:.5rem; }
+.file-info-box strong { color:var(--navy-800); }
+.file-info-box span { color:var(--accent-2); font-weight:700; }
+.preview-table-wrap { overflow-x:auto; border-radius:12px; border:1px solid var(--border); max-height:280px; }
+.preview-table { width:100%; border-collapse:collapse; font-size:.82rem; min-width:500px; }
+.preview-table th { background:var(--navy-800); color:#fff; padding:.7rem .9rem; text-align:start; font-weight:700; font-size:.78rem; white-space:nowrap; position:sticky; top:0; }
+.preview-table td { padding:.6rem .9rem; border-bottom:1px solid var(--border); white-space:nowrap; }
+.preview-table tr:hover td { background:rgba(0,180,216,.05); }
+.preview-table .empty-cell { color:#cbd5e1; font-style:italic; }
+.mapping-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; }
+.mapping-item { background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:.9rem 1rem; }
+.mapping-item label { display:block; font-size:.8rem; font-weight:700; color:var(--navy-800); margin-bottom:.4rem; }
+.mapping-item label .required { color:var(--danger); }
+.mapping-item label .optional { color:var(--muted); font-weight:500; font-size:.72rem; }
+.mapping-item select { width:100%; padding:.6rem .8rem; border:1.5px solid var(--border); border-radius:8px; font-family:inherit; font-size:.85rem; background:#fff; cursor:pointer; transition:all .3s; }
+.mapping-item select:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(0,180,216,.12); }
+.mapping-item select.auto-detected { border-color:var(--success); background:#f0fdf4; }
+.mapped-preview { background:var(--bg); border-radius:12px; padding:1rem; margin-top:1rem; font-size:.82rem; }
+.mapped-preview-item { display:flex; align-items:center; gap:.7rem; padding:.5rem 0; border-bottom:1px dashed var(--border); }
+.mapped-preview-item:last-child { border-bottom:none; }
+.mapped-preview-item .tag { background:var(--accent); color:#fff; padding:2px 8px; border-radius:6px; font-size:.7rem; font-weight:800; white-space:nowrap; }
+.mapped-preview-item .tag.subject { background:var(--gold); color:var(--navy-900); }
+.mapped-preview-item .tag.term-tag { background:#8b5cf6; color:#fff; }
+.preview-actions { display:flex; gap:.7rem; justify-content:flex-end; padding-top:1.2rem; border-top:1px solid var(--border); margin-top:1.3rem; flex-wrap:wrap; }
+.preview-actions .btn { padding:.75rem 1.6rem; font-size:.9rem; }
+.warning-box { background:#fef3c7; border:1px solid #fcd34d; border-radius:12px; padding:.9rem 1.2rem; font-size:.85rem; color:#78350f; margin-bottom:1rem; display:none; }
+.warning-box.show { display:block; }
+.warning-box strong { color:#92400e; }
+.warning-box ul { margin-top:.4rem; padding-inline-start:1.2rem; font-size:.82rem; }
+
+.ann-editor-modal { position:fixed; inset:0; background:rgba(6,26,51,.85); backdrop-filter:blur(8px); z-index:4000; display:none; align-items:center; justify-content:center; padding:1.5rem; animation:fadeIn .3s ease; }
+.ann-editor-modal.open { display:flex; }
+.ann-editor { background:#fff; border-radius:22px; max-width:800px; width:100%; max-height:92vh; overflow-y:auto; box-shadow:0 30px 80px rgba(6,26,51,.5); animation:slideUp .4s ease; }
+.ann-editor-head { background:linear-gradient(135deg,#8b5cf6,#7c3aed); color:#fff; padding:1.3rem 1.8rem; display:flex; align-items:center; justify-content:space-between; border-radius:22px 22px 0 0; position:sticky; top:0; z-index:10; }
+.ann-editor-head h3 { font-size:1.05rem; font-weight:800; display:flex; align-items:center; gap:.5rem; }
+.ann-editor-head h3::before { content:'✏️'; }
+.ann-editor-body { padding:1.8rem; }
+.form-group { margin-bottom:1.3rem; }
+.form-group label { display:block; font-size:.85rem; font-weight:800; color:var(--navy-800); margin-bottom:.5rem; }
+.form-group label .required { color:var(--danger); }
+.form-group label .optional { color:var(--muted); font-weight:500; font-size:.75rem; }
+.form-group input[type="text"], .form-group input[type="url"], .form-group input[type="date"], .form-group textarea { width:100%; padding:.85rem 1.1rem; border:1.5px solid var(--border); border-radius:12px; font-family:inherit; font-size:.92rem; background:#fff; transition:all .3s; }
+.form-group input:focus, .form-group textarea:focus { outline:none; border-color:#8b5cf6; box-shadow:0 0 0 4px rgba(139,92,246,.12); }
+.form-group textarea { resize:vertical; min-height:120px; line-height:1.7; }
+.form-hint { font-size:.75rem; color:var(--muted); margin-top:.35rem; line-height:1.6; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.image-upload-zone { border:2px dashed var(--border); border-radius:14px; padding:1.5rem; text-align:center; cursor:pointer; transition:all .3s; background:var(--bg); position:relative; }
+.image-upload-zone:hover { border-color:#8b5cf6; background:rgba(139,92,246,.03); }
+.image-upload-zone.has-image { padding:0; background:#000; }
+.image-upload-zone .icon { font-size:2.5rem; margin-bottom:.5rem; display:block; }
+.image-upload-zone p { font-size:.85rem; color:var(--muted); margin-bottom:.3rem; }
+.image-upload-zone small { font-size:.72rem; color:var(--muted); }
+.image-preview { position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; border-radius:12px; }
+.image-preview img { width:100%; height:100%; object-fit:cover; display:block; }
+.image-remove { position:absolute; top:.7rem; inset-inline-end:.7rem; background:rgba(220,38,38,.95); color:#fff; border:none; width:34px; height:34px; border-radius:50%; cursor:pointer; display:grid; place-items:center; font-size:1rem; box-shadow:0 6px 15px rgba(0,0,0,.3); transition:transform .2s; z-index:2; }
+.image-remove:hover { transform:scale(1.1); }
+.video-preview { margin-top:1rem; border-radius:12px; overflow:hidden; background:#000; aspect-ratio:16/9; }
+.video-preview iframe, .video-preview video { width:100%; height:100%; border:none; display:block; }
+.ann-editor-actions { display:flex; gap:.7rem; justify-content:flex-end; padding-top:1.3rem; border-top:1px solid var(--border); margin-top:1.5rem; flex-wrap:wrap; }
+
+.ann-admin-header { display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-bottom:1.5rem; flex-wrap:wrap; }
+.ann-admin-header h3 { font-size:1.1rem; font-weight:800; color:var(--navy-800); display:flex; align-items:center; gap:.5rem; }
+.ann-admin-header h3::before { content:'📢'; }
+.ann-admin-list { display:grid; gap:1rem; margin-bottom:1.5rem; }
+.ann-admin-item { background:#fff; border:1px solid var(--border); border-radius:16px; padding:1.2rem; display:flex; gap:1rem; align-items:flex-start; transition:all .3s; }
+.ann-admin-item:hover { box-shadow:0 10px 25px rgba(11,37,69,.08); }
+.ann-admin-thumb { width:80px; height:80px; border-radius:12px; background:linear-gradient(135deg,var(--navy-700),var(--accent)); display:grid; place-items:center; font-size:1.8rem; color:#fff; flex-shrink:0; overflow:hidden; }
+.ann-admin-thumb img { width:100%; height:100%; object-fit:cover; }
+.ann-admin-info { flex:1; min-width:150px; }
+.ann-admin-info h4 { font-size:.95rem; font-weight:800; color:var(--navy-800); margin-bottom:.35rem; }
+.ann-admin-info .meta { display:flex; gap:.5rem; flex-wrap:wrap; font-size:.72rem; color:var(--muted); font-weight:600; margin-bottom:.4rem; }
+.ann-admin-info .meta span { display:inline-flex; align-items:center; gap:.25rem; padding:.15rem .5rem; background:var(--bg); border-radius:50px; }
+.ann-admin-info .preview { font-size:.8rem; color:var(--muted); line-height:1.6; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.ann-admin-actions { display:flex; gap:.4rem; flex-shrink:0; flex-wrap:wrap; }
+
+.toast { position:fixed; bottom:2rem; right:2rem; background:var(--navy-900); color:#fff; padding:1rem 1.5rem; border-radius:14px; box-shadow:0 20px 50px rgba(0,0,0,.35); z-index:5000; display:flex; align-items:center; gap:.7rem; font-weight:700; font-size:.9rem; transform:translateY(200%); transition:transform .4s cubic-bezier(0.68, -0.55, 0.265, 1.55); max-width:400px; }
+.toast.show { transform:translateY(0); }
+.toast.success { background:linear-gradient(135deg,#16a34a,#15803d); }
+.toast.error { background:linear-gradient(135deg,#dc2626,#b91c1c); }
+.toast.info { background:linear-gradient(135deg,var(--accent),var(--accent-2)); }
+
+@media (max-width:900px) {
+  .foot-grid { grid-template-columns:1fr 1fr; }
+  .about-grid { grid-template-columns:1fr; gap:2.5rem; }
+  .about-visual { max-width:320px; margin:auto; font-size:4.5rem; }
+  .dept-about-grid { grid-template-columns:1fr; }
+  .ann-grid { grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); }
+}
+@media (max-width:760px) {
+  .menu-toggle { display:flex; }
+  .nav-links { position:absolute; top:100%; right:0; left:0; background:#fff; flex-direction:column; gap:0; max-height:0; overflow:hidden; transition:max-height .4s ease; box-shadow:0 12px 30px rgba(11,37,69,.08); }
+  .nav-links.open { max-height:380px; padding:1rem 0; }
+  .nav-links li { text-align:center; padding:.7rem 0; }
+  .nav-links a::after { display:none; }
+  .brand-text small { display:none; }
+  .foot-grid { grid-template-columns:1fr; gap:1.8rem; }
+  .result-head { flex-direction:column; align-items:flex-start; }
+  .result-table th, .result-table td { padding:.75rem 1rem; font-size:.85rem; }
+  .dept-top { grid-template-columns:80px 1fr; gap:1rem; }
+  .dept-top-icon { width:80px; height:80px; font-size:2.3rem; }
+  .admin-modal-body { padding:1.5rem; }
+  .preview-body { padding:1.3rem; }
+  .term-upload-grid { grid-template-columns:1fr; }
+  .term-tab { padding:.45rem .75rem; font-size:.72rem; }
+  .toast { right:1rem; left:1rem; bottom:1rem; }
+  .form-row { grid-template-columns:1fr; }
+  .ann-admin-item { flex-direction:column; }
+  .ann-admin-actions { width:100%; justify-content:flex-end; }
+  .ann-grid { grid-template-columns:1fr; }
+  .ann-editor-body { padding:1.3rem; }
+  .admin-dept-summary { flex-direction:column; align-items:stretch; }
+  .visibility-toggle { margin-inline-start:0; justify-content:center; }
+  .results-locked-icon { width:70px; height:70px; font-size:2.2rem; }
+  .results-locked-box { padding:2rem 1.3rem; }
+  .results-locked-box h3 { font-size:1.15rem; }
+}
+@media (max-width:420px) {
+  .lang-switch button { padding:.3rem .6rem; font-size:.72rem; }
+  .brand-logo { width:40px; height:40px; font-size:.95rem; }
+  .brand-text strong { font-size:.82rem; }
+  .stat-value { font-size:1.5rem; }
+  .dept-top { grid-template-columns:1fr; text-align:center; }
+  .dept-top-icon { margin:auto; }
+  .term-tabs { gap:.25rem; }
+  .term-tab { padding:.4rem .55rem; font-size:.68rem; }
+  .ann-admin-thumb { width:60px; height:60px; }
+}
+@media print {
+  header, footer, .hero, .about-institute, #departments, #announcements, .dept-about, .search-panel, .result-actions, .section-head, .modal-overlay, .preview-overlay, .toast, .ann-editor-modal, .results-locked-box, .results-hidden-panel { display:none !important; }
+  body { background:#fff; }
+  .dept-section { padding:0; border:none; }
+  .dept-section:not(.printing) { display:none; }
+  .result-card { box-shadow:none; border:1px solid #ccc; }
+}
+</style>
+</head>
+<body>
+
+<header id="header" class="">
+  <div class="container">
+    <nav>
+      <a href="#home" class="brand">
+        <div class="brand-logo">HIST</div>
+        <div class="brand-text">
+          <strong data-ar="المعهد العالي للعلوم والتقنية" data-en="Higher Institute of Science &amp; Technology">المعهد العالي للعلوم والتقنية</strong>
+          <small data-ar="هراوة - ليبيا" data-en="Hrawa - Libya">هراوة - ليبيا</small>
+        </div>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home" data-ar="الرئيسية" data-en="Home">الرئيسية</a></li>
+        <li><a href="#about" data-ar="عن المعهد" data-en="About">عن المعهد</a></li>
+        <li><a href="#departments" data-ar="الأقسام" data-en="Departments">الأقسام</a></li>
+        <li><a href="#announcements" data-ar="الإعلانات" data-en="Announcements">الإعلانات</a></li>
+        <li><a href="#contact" data-ar="اتصل بنا" data-en="Contact">اتصل بنا</a></li>
+      </ul>
+      <div class="nav-actions">
+        <div class="lang-switch">
+          <button data-lang="ar" class="active">ع</button>
+          <button data-lang="en">EN</button>
+        </div>
+        <button class="admin-btn" id="openAdmin" title="لوحة الإدارة">⚙️</button>
+        <button class="menu-toggle" id="menuToggle" aria-label="menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="home">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge" data-ar="🎓 بوابة الخدمات الإلكترونية" data-en="🎓 E-Services Portal">🎓 بوابة الخدمات الإلكترونية</div>
+      <h1 data-ar="المعهد العالي للعلوم والتقنية - هراوة" data-en="Higher Institute of Science &amp; Technology - Hrawa">المعهد العالي للعلوم والتقنية - هراوة</h1>
+      <p data-ar="منصة إلكترونية للاستعلام عن النتائج الدراسية لجميع الفصول (6 فصول لكل قسم)." data-en="Electronic platform to check academic results for all terms (6 terms per department).">منصة إلكترونية للاستعلام عن النتائج الدراسية لجميع الفصول (6 فصول لكل قسم).</p>
+      <div class="hero-buttons">
+        <a href="#departments" class="btn">
+          <span data-ar="🔍 استعلم عن نتيجتك" data-en="🔍 Check Your Result">🔍 استعلم عن نتيجتك</span>
+        </a>
+        <a href="#announcements" class="btn btn-outline">
+          <span data-ar="📢 الإعلانات" data-en="📢 Announcements">📢 الإعلانات</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block about-institute" id="about">
+  <div class="container">
+    <div class="section-head">
+      <span class="tag" data-ar="من نحن" data-en="Who We Are">من نحن</span>
+      <h2 data-ar="نبذة عن المعهد" data-en="About the Institute">نبذة عن المعهد</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-visual">🏛️</div>
+      <div class="about-text">
+        <h2 data-ar="صرح أكاديمي رائد في منطقة هراوة" data-en="A leading academic institution in Hrawa">صرح أكاديمي رائد في منطقة هراوة</h2>
+        <p data-ar="المعهد العالي للعلوم والتقنية - هراوة هو مؤسسة تعليمية متخصصة تأسست لتخريج كوادر علمية وتقنية مؤهلة، ويتضمن 4 أقسام أكاديمية، كل قسم موزّع على 6 فصول دراسية." data-en="The Higher Institute of Science and Technology - Hrawa is a specialized educational institution with 4 academic departments, each divided into 6 academic terms.">المعهد العالي للعلوم والتقنية - هراوة هو مؤسسة تعليمية متخصصة تأسست لتخريج كوادر علمية وتقنية مؤهلة، ويتضمن 4 أقسام أكاديمية، كل قسم موزّع على 6 فصول دراسية.</p>
+        <ul class="about-list">
+          <li data-ar="أربعة أقسام أكاديمية متخصصة" data-en="Four specialized academic departments">أربعة أقسام أكاديمية متخصصة</li>
+          <li data-ar="ستة فصول دراسية لكل قسم" data-en="Six academic terms per department">ستة فصول دراسية لكل قسم</li>
+          <li data-ar="هيئة تدريسية ذات خبرات علمية وعملية" data-en="Faculty with scientific and practical expertise">هيئة تدريسية ذات خبرات علمية وعملية</li>
+        </ul>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">👨‍🏫</div>
+            <div class="stat-value" id="facultyCount">48</div>
+            <div class="stat-label" data-ar="عضو هيئة تدريس" data-en="Faculty Members">عضو هيئة تدريس</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🎓</div>
+            <div class="stat-value" id="studentsCount">620</div>
+            <div class="stat-label" data-ar="طالب وطالبة" data-en="Students">طالب وطالبة</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🏢</div>
+            <div class="stat-value">4</div>
+            <div class="stat-label" data-ar="أقسام أكاديمية" data-en="Departments">أقسام أكاديمية</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📚</div>
+            <div class="stat-value">6</div>
+            <div class="stat-label" data-ar="فصول دراسية" data-en="Terms">فصول دراسية</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="departments">
+  <div class="container">
+    <div class="section-head">
+      <span class="tag" data-ar="التخصصات" data-en="Programs">التخصصات</span>
+      <h2 data-ar="الأقسام العلمية" data-en="Scientific Departments">الأقسام العلمية</h2>
+      <p data-ar="اختر القسم للاطلاع على نبذته والاستعلام عن النتائج" data-en="Select a department to view its overview and check results">اختر القسم للاطلاع على نبذته والاستعلام عن النتائج</p>
+    </div>
+    <div class="dept-grid">
+      <a href="#dept-electrical" class="dept-card">
+        <div class="dept-icon">⚡</div>
+        <h3 data-ar="الهندسة الكهربائية" data-en="Electrical Engineering">الهندسة الكهربائية</h3>
+        <p data-ar="أنظمة القوى والتحكم والإلكترونيات" data-en="Power systems, control &amp; electronics">أنظمة القوى والتحكم والإلكترونيات</p>
+      </a>
+      <a href="#dept-petroleum" class="dept-card">
+        <div class="dept-icon">🛢️</div>
+        <h3 data-ar="الهندسة النفطية" data-en="Petroleum Engineering">الهندسة النفطية</h3>
+        <p data-ar="الحفر والإنتاج وهندسة المكامن" data-en="Drilling, production &amp; reservoir engineering">الحفر والإنتاج وهندسة المكامن</p>
+      </a>
+      <a href="#dept-admin" class="dept-card">
+        <div class="dept-icon">📊</div>
+        <h3 data-ar="العلوم الإدارية" data-en="Administrative Sciences">العلوم الإدارية</h3>
+        <p data-ar="إدارة الأعمال والمحاسبة والمالية" data-en="Business, accounting &amp; finance">إدارة الأعمال والمحاسبة والمالية</p>
+      </a>
+      <a href="#dept-computer" class="dept-card">
+        <div class="dept-icon">💻</div>
+        <h3 data-ar="الحاسوب" data-en="Computer Science">الحاسوب</h3>
+        <p data-ar="البرمجة وقواعد البيانات والشبكات" data-en="Programming, databases &amp; networks">البرمجة وقواعد البيانات والشبكات</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ قسم الكهرباء ============ -->
+<section class="dept-section" id="dept-electrical" data-dept="electrical">
+  <div class="container">
+    <div class="dept-top">
+      <div class="dept-top-icon">⚡</div>
+      <div class="dept-top-text">
+        <h2 data-ar="قسم الهندسة الكهربائية" data-en="Electrical Engineering Department">قسم الهندسة الكهربائية</h2>
+        <p data-ar="أنظمة القوى، التحكم الآلي، الإلكترونيات، والطاقة المتجددة (6 فصول)" data-en="Power systems, automatic control, electronics, and renewable energy (6 terms)">أنظمة القوى، التحكم الآلي، الإلكترونيات، والطاقة المتجددة (6 فصول)</p>
+      </div>
+    </div>
+    <!-- المحتوى المتاح -->
+    <div class="results-available" data-dept="electrical" style="display: block;">
+      <div class="search-panel" data-dept="electrical">
+        <div class="search-panel-title" data-ar="منظومة نتائج القسم" data-en="Results Portal">منظومة نتائج القسم</div>
+        <div class="term-tabs" data-dept="electrical">
+        <button class="term-tab active" data-dept="electrical" data-sem="semester1">
+          1️⃣ الفصل الأول
+          <span class="badge">1</span>
+        </button>
+      
+        <button class="term-tab " data-dept="electrical" data-sem="semester2">
+          2️⃣ الفصل الثاني
+          <span class="badge">3</span>
+        </button>
+      
+        <button class="term-tab " data-dept="electrical" data-sem="semester3">
+          3️⃣ الفصل الثالث
+          <span class="badge">0</span>
+        </button>
+      
+        <button class="term-tab " data-dept="electrical" data-sem="semester4">
+          4️⃣ الفصل الرابع
+          <span class="badge">0</span>
+        </button>
+      
+        <button class="term-tab " data-dept="electrical" data-sem="semester5">
+          5️⃣ الفصل الخامس
+          <span class="badge">0</span>
+        </button>
+      
+        <button class="term-tab " data-dept="electrical" data-sem="semester6">
+          6️⃣ الفصل السادس
+          <span class="badge">0</span>
+        </button>
+      </div>
+        <div class="search-row">
+          <input type="text" class="student-input" data-dept="electrical" inputmode="numeric" data-ar-placeholder="أدخل رقم القيد" data-en-placeholder="Enter registration number" placeholder="أدخل رقم القيد">
+          <button class="btn search-btn" data-dept="electrical">
+            <span data-ar="بحث" data-en="Search">بحث</span> 🔍
+          </button>
+        </div>
+      </div>
+      <div class="result-area" id="result-electrical"></div>
+    </div>
+    <!-- المحتوى المقفل -->
+    <div class="results-locked" data-dept="electrical" style="display: none;">
+      <div class="results-locked-box">
+        <div class="results-locked-icon">🔒</div>
+        <h3 data-ar="النتائج غير متاحة حالياً" data-en="Results Currently Unavailable">النتائج غير متاحة حالياً</h3>
+        <p data-ar="تم إخفاء نتائج هذا القسم مؤقتاً من قبل الإدارة. يرجى المحاولة لاحقاً أو التواصل مع شؤون الطلاب." data-en="This department's results have been temporarily hidden by administration. Please try again later or contact student affairs.">تم إخفاء نتائج هذا القسم مؤقتاً من قبل الإدارة. يرجى المحاولة لاحقاً أو التواصل مع شؤون الطلاب.</p>
+        <div class="results-locked-badge" data-ar="بانتظار إعلان النتائج رسمياً" data-en="Awaiting official results announcement">بانتظار إعلان النتائج رسمياً</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ قسم النفط ============ -->
+<section class="dept-section" id="dept-petroleum" data-dept="petroleum">
+  <div class="container">
+    <div class="dept-top">
+      <div class="dept-top-icon">🛢️</div>
+      <div class="dept-top-text">
+        <h2 data-ar="قسم الهندسة النفطية" data-en="Petroleum Engineering Department">قسم الهندسة النفطية</h2>
+        <p data-ar="هندسة الحفر، الإنتاج، المكامن (6 فصول)" data-en="Drilling, production, reservoirs (6 terms)">هندسة الحفر، الإنتاج، المكامن (6 فصول)</p>
+      </div>
+    </div>
+    <div class="results-available" data-dept="petroleum" style="display: block;">
+      <div class="search-panel" data-dept="petroleum">
+        <div class="search-panel-title" data-ar="منظومة نتائج القسم" data-en="Results Portal">منظومة نتائج القسم</div>
+        <div class="term-tabs" data-dept="petroleum">
+        <button class="term-tab active" data-dept="petroleum" data-sem="semester1">
+          1️⃣ الفصل الأول
+          <span class="badge">1</span>
+        </button>
+      
+        <button class="term-tab " data-dept="petroleum" data-sem="semester2">
+          2️⃣ الفصل الثاني
+          <span class="badge">0</span>
+        </button>
+      
+        <button class="term-tab " data-dept="petroleum" data-sem="semester3">
+          3️⃣ الفصل الثالث
+          <span class="badge">0</span>
+        </button>
+      
+        <button class="term-tab " data-dept="petroleum" data-sem="semester4">
+          4️⃣ الفصل الرابع
+          <span class="badge">0</span>
+        </button>
+      
+        <button class="term-tab " data-dept="petroleum" data-sem="semester5">
+          5️⃣ الفصل الخامس
+          <span class="badge">0</span>
+        </button>
+      
+        <button class="term-tab " data-dept="petroleum" data-sem="semester6">
+          6️⃣ الفصل السادس
+          <span class="badge">0</span>
+        </button>
+      </div>
+        <div class="search-row">
+          <input type="text" class="student-input" data-dept="petroleum" inputmode="numeric" data-ar-placeholder="أدخل رقم القيد" data-en-placeholder="Enter registration number" placeholder="أدخل رقم القيد">
+          <button class="btn search-btn" data-dept="petroleum">
+            <span data-ar="بحث" data-en="Search">بحث</span> 🔍
+          </button>
+        </div>
+      </div>
+      <div class="result-area" id="result-petroleum"></div>
+    </div>
+    <div class="results-locked" data-dept="petroleum" style="display:none">
+      <div class="results-locked-box">
+        <div class="results-locked-icon">🔒</div>
+        <h3 data-ar="النتائج غير متاحة حالياً" data-en="Results Currently Unavailable">النتائج غير متاحة حالياً</h3>
+        <p data-ar="تم إخفاء نتائج هذا القسم مؤقتاً من قبل الإدارة. يرجى المحاولة لاحقاً أو التواصل مع شؤون الطلاب." data-en="This department's results have been temporarily hidden by administration.">تم إخفاء نتائج هذا القسم مؤقتاً من قبل الإدارة. يرجى المحاولة لاحقاً أو التواصل مع شؤون الطلاب.</p>
+        <div class="results-locked-badge" data-ar="بانتظار إعلان النتائج رسمياً" data-en="Awaiting official results announcement">بانتظار إعلان النتائج رسمياً</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ قسم الإدارية ============ -->
+<section class="dept-section" id="dept-admin" data-dept="admin">
+  <div class="container">
+    <div class="dept-top">
+      <div class="dept-top-icon">📊</div>
+      <div class="dept-top-text">
+        <h2 data-ar="قسم العلوم الإدارية" data-en="Administrative Sciences Department">قسم العلوم الإدارية</h2>
+        <p data-ar="إدارة الأعمال، المحاسبة، التسويق (6 فصول)" data-en="Business, accounting, marketing (6 terms)">إدارة الأعمال، المحاسبة، التسويق (6 فصول)</p>
+      </div>
+    </div>
+    <div class="results-available" data-dept="admin" style="display: block;">
+      <div class="search-panel" data-dept="admin">
+        <div class="search-panel-title" data-ar="منظومة نتائج القسم" data-en="Results Portal">منظومة نتائج القسم</div>
+        <div class="term-tabs" data-dept="admin">
+        <button class="term-tab active" data-dept="admin" data-sem="semester1">
+          1️⃣ الفصل الأول
+          <span class="badge">0</span>
+        </button>
+      
+        <button class="term-tab " data-dept="admin" data-sem="semester2">
+          2️⃣ الفصل الثاني
+          <span class="badge">0</span>
+        </button>
+      
+        <button class="term-tab " data-dept="admin" data-sem="semester3">
+          3️⃣ الفصل الثالث
+          <span class="badge">0</span>
+        </button>
+      
+        <button class="term-tab " data-dept="admin" data-sem="semester4">
+          4️⃣ الفصل الرابع
+          <span class="badge">0</span>
+        </button>
+      
+        <button class="term-tab " data-dept="admin" data-sem="semester5">
+          5️⃣ الفصل الخامس
+          <span class="badge">0</span>
+        </button>
+      
+        <button class="term-tab " data-dept="admin" data-sem="semester6">
+          6️⃣ الفصل السادس
+          <span class="badge">0</span>
+        </button>
+      </div>
+        <div class="search-row">
+          <input type="text" class="student-input" data-dept="admin" inputmode="numeric" data-ar-placeholder="أدخل رقم القيد" data-en-placeholder="Enter registration number" placeholder="أدخل رقم القيد">
+          <button class="btn search-btn" data-dept="admin">
+            <span data-ar="بحث" data-en="Search">بحث</span> 🔍
+          </button>
+        </div>
+      </div>
+      <div class="result-area" id="result-admin"></div>
+    </div>
+    <div class="results-locked" data-dept="admin" style="display:none">
+      <div class="results-locked-box">
+        <div class="results-locked-icon">🔒</div>
+        <h3 data-ar="النتائج غير متاحة حالياً" data-en="Results Currently Unavailable">النتائج غير متاحة حالياً</h3>
+        <p data-ar="تم إخفاء نتائج هذا القسم مؤقتاً من قبل الإدارة. يرجى المحاولة لاحقاً أو التواصل مع شؤون الطلاب." data-en="This department's results have been temporarily hidden by administration.">تم إخفاء نتائج هذا القسم مؤقتاً من قبل الإدارة. يرجى المحاولة لاحقاً أو التواصل مع شؤون الطلاب.</p>
+        <div class="results-locked-badge" data-ar="بانتظار إعلان النتائج رسمياً" data-en="Awaiting official results announcement">بانتظار إعلان النتائج رسمياً</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ قسم الحاسوب ============ -->
+<section class="dept-section" id="dept-computer" data-dept="computer">
+  <div class="container">
+    <div class="dept-top">
+      <div class="dept-top-icon">💻</div>
+      <div class="dept-top-text">
+        <h2 data-ar="قسم الحاسوب" data-en="Computer Science Department">قسم الحاسوب</h2>
+        <p data-ar="البرمجة، قواعد البيانات، الشبكات (6 فصول)" data-en="Programming, databases, networks (6 terms)">البرمجة، قواعد البيانات، الشبكات (6 فصول)</p>
+      </div>
+    </div>
+    <div class="results-available" data-dept="computer" style="display: block;">
+      <div class="search-panel" data-dept="computer">
+        <div class="search-panel-title" data-ar="منظومة نتائج القسم" data-en="Results Portal">منظومة نتائج القسم</div>
+        <div class="term-tabs" data-dept="computer">
+        <button class="term-tab active" data-dept="computer" data-sem="semester1">
+          1️⃣ الفصل الأول
+          <span class="badge">0</span>
+        </button>
+      
+        <button class="term-tab " data-dept="computer" data-sem="semester2">
+          2️⃣ الفصل الثاني
+          <span class="badge">0</span>
+        </button>
+      
+        <button class="term-tab " data-dept="computer" data-sem="semester3">
+          3️⃣ الفصل الثالث
+          <span class="badge">0</span>
+        </button>
+      
+        <button class="term-tab " data-dept="computer" data-sem="semester4">
+          4️⃣ الفصل الرابع
+          <span class="badge">0</span>
+        </button>
+      
+        <button class="term-tab " data-dept="computer" data-sem="semester5">
+          5️⃣ الفصل الخامس
+          <span class="badge">0</span>
+        </button>
+      
+        <button class="term-tab " data-dept="computer" data-sem="semester6">
+          6️⃣ الفصل السادس
+          <span class="badge">0</span>
+        </button>
+      </div>
+        <div class="search-row">
+          <input type="text" class="student-input" data-dept="computer" inputmode="numeric" data-ar-placeholder="أدخل رقم القيد" data-en-placeholder="Enter registration number" placeholder="أدخل رقم القيد">
+          <button class="btn search-btn" data-dept="computer">
+            <span data-ar="بحث" data-en="Search">بحث</span> 🔍
+          </button>
+        </div>
+      </div>
+      <div class="result-area" id="result-computer"></div>
+    </div>
+    <div class="results-locked" data-dept="computer" style="display:none">
+      <div class="results-locked-box">
+        <div class="results-locked-icon">🔒</div>
+        <h3 data-ar="النتائج غير متاحة حالياً" data-en="Results Currently Unavailable">النتائج غير متاحة حالياً</h3>
+        <p data-ar="تم إخفاء نتائج هذا القسم مؤقتاً من قبل الإدارة. يرجى المحاولة لاحقاً أو التواصل مع شؤون الطلاب." data-en="This department's results have been temporarily hidden by administration.">تم إخفاء نتائج هذا القسم مؤقتاً من قبل الإدارة. يرجى المحاولة لاحقاً أو التواصل مع شؤون الطلاب.</p>
+        <div class="results-locked-badge" data-ar="بانتظار إعلان النتائج رسمياً" data-en="Awaiting official results announcement">بانتظار إعلان النتائج رسمياً</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block announcements" id="announcements">
+  <div class="container">
+    <div class="section-head">
+      <span class="tag" data-ar="آخر الأخبار" data-en="Latest News">آخر الأخبار</span>
+      <h2 data-ar="إعلانات المعهد" data-en="Institute Announcements">إعلانات المعهد</h2>
+      <p data-ar="تابع آخر إعلانات وأخبار المعهد" data-en="Follow the latest announcements and news of the institute">تابع آخر إعلانات وأخبار المعهد</p>
+    </div>
+    <div class="ann-grid" id="annGrid">
+      <div class="ann-card">
+        <div class="ann-media no-image">📢</div>
+        <div class="ann-body">
+          <div class="ann-meta">
+            <span class="ann-date-badge">15 سبتمبر 2025</span>
+            <span class="ann-tag">تسجيل</span>
+          </div>
+          <h3>بدء التسجيل للعام الدراسي الجديد 2025/2026</h3>
+          <p>يبدأ التسجيل لجميع الأقسام اعتباراً من 15 سبتمبر وحتى 30 سبتمبر.</p>
+        </div>
+      </div></div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">
+          <div class="brand-logo">HIST</div>
+          <strong data-ar="المعهد العالي للعلوم والتقنية" data-en="Higher Institute of Science &amp; Technology">المعهد العالي للعلوم والتقنية</strong>
+        </div>
+        <p data-ar="صرح تعليمي متخصص يسعى لتخريج كفاءات علمية وتقنية تخدم سوق العمل الليبي." data-en="A specialized educational institution committed to graduating scientific and technical talents.">صرح تعليمي متخصص يسعى لتخريج كفاءات علمية وتقنية تخدم سوق العمل الليبي.</p>
+      </div>
+      <div class="foot-col">
+        <h4 data-ar="روابط سريعة" data-en="Quick Links">روابط سريعة</h4>
+        <a href="#home" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
+        <a href="#about" data-ar="عن المعهد" data-en="About">عن المعهد</a>
+        <a href="#departments" data-ar="الأقسام" data-en="Departments">الأقسام</a>
+        <a href="#announcements" data-ar="الإعلانات" data-en="Announcements">الإعلانات</a>
+      </div>
+      <div class="foot-col">
+        <h4 data-ar="معلومات التواصل" data-en="Contact Info">معلومات التواصل</h4>
+        <a href="#">📍 <span data-ar="هراوة - ليبيا" data-en="Hrawa - Libya">هراوة - ليبيا</span></a>
+        <a href="mailto:info@hist-hrawa.edu.ly">✉️ info@hist-hrawa.edu.ly</a>
+        <a href="tel:+218">📞 +218 XX XXX XXXX</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span data-ar="© 2025 المعهد العالي للعلوم والتقنية - هراوة. جميع الحقوق محفوظة." data-en="© 2025 Higher Institute of Science &amp; Technology - Hrawa. All rights reserved.">© 2025 المعهد العالي للعلوم والتقنية - هراوة. جميع الحقوق محفوظة.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="adminModal">
+  <div class="admin-modal">
+    <div class="admin-modal-head">
+      <h3 data-ar="لوحة تحكم الإدارة" data-en="Admin Control Panel">لوحة تحكم الإدارة</h3>
+      <button class="modal-close" id="closeAdmin">✕</button>
+    </div>
+    <div class="admin-modal-body">
+
+      <div class="login-screen" id="loginScreen" style="display: block;">
+        <span class="lock-icon">🔐</span>
+        <h4 data-ar="الدخول للوحة الإدارة" data-en="Admin Login">الدخول للوحة الإدارة</h4>
+        <p data-ar="أدخل كلمة المرور للمتابعة" data-en="Enter password to continue">أدخل كلمة المرور للمتابعة</p>
+        <input type="password" id="adminPassword" placeholder="••••••" autocomplete="off">
+        <br>
+        <button class="btn" id="loginBtn">
+          <span data-ar="دخول" data-en="Login">دخول</span> 🔓
+        </button>
+        <div class="login-error" id="loginError"></div>
+      </div>
+
+      <div class="admin-panel" id="adminPanel">
+        <div class="admin-welcome">
+          <p data-ar="✅ مرحباً بك - أدر النتائج والإعلانات" data-en="✅ Welcome - Manage results and announcements">✅ مرحباً بك - أدر النتائج والإعلانات</p>
+          <button class="btn btn-danger" id="logoutBtn">
+            <span data-ar="خروج" data-en="Logout">خروج</span> 🚪
+          </button>
+        </div>
+
+        <div class="generate-bar">
+          <div class="gen-icon">💾</div>
+          <div class="gen-text">
+            <strong data-ar="الخطوة الأخيرة: توليد ملف HTML جديد" data-en="Final step: Generate new HTML file">الخطوة الأخيرة: توليد ملف HTML جديد</strong>
+            <p data-ar="بعد كل التعديلات (النتائج، الإعلانات، إظهار/إخفاء)، اضغط على الزر لتنزيل ملف HTML جديد يحتوي على كل شيء. ثم ارفعه للاستضافة." data-en="After all changes (results, announcements, visibility), click to download HTML with everything embedded. Then upload it to hosting.">بعد كل التعديلات (النتائج، الإعلانات، إظهار/إخفاء)، اضغط على الزر لتنزيل ملف HTML جديد يحتوي على كل شيء. ثم ارفعه للاستضافة.</p>
+          </div>
+          <button class="btn" id="generateBtn">
+            📥 <span data-ar="تنزيل ملف HTML الجديد" data-en="Download New HTML File">تنزيل ملف HTML الجديد</span>
+          </button>
+        </div>
+
+        <div class="admin-dept-tabs" id="adminDeptTabs">
+    <button class="admin-dept-tab active" data-tab="electrical">
+      ⚡ الهندسة الكهربائية
+      
+    </button>
+  
+    <button class="admin-dept-tab " data-tab="petroleum">
+      🛢️ الهندسة النفطية
+      
+    </button>
+  
+    <button class="admin-dept-tab " data-tab="admin">
+      📊 العلوم الإدارية
+      
+    </button>
+  
+    <button class="admin-dept-tab " data-tab="computer">
+      💻 الحاسوب
+      
+    </button>
+  
+    <button class="admin-dept-tab ann-tab " data-tab="announcements">
+      📢 الإعلانات
+      <span style="background:rgba(255,255,255,.25);padding:1px 8px;border-radius:50px;font-size:.7rem;font-weight:800">1</span>
+    </button>
+  </div>
+
+        <div id="adminDeptContent">
+    <div class="admin-dept-summary">
+      <div class="item">
+        <span>القسم:</span>
+        <strong>الهندسة الكهربائية</strong>
+      </div>
+      <div class="item">
+        <span>إجمالي الطلاب:</span>
+        <strong>4</strong>
+      </div>
+      <div class="item">
+        <span>الفصول:</span>
+        <strong>6</strong>
+      </div>
+      <button class="visibility-toggle visible" onclick="toggleResultsVisibility('electrical')" title="اضغط لإخفاء النتائج">
+        <span class="toggle-icon">👁️</span>
+        <span class="toggle-text">
+          <small>حالة النتائج في الموقع</small>
+          <strong>ظاهرة</strong>
+        </span>
+      </button>
+    </div>
+    <div class="term-upload-grid">
+      
+      <div class="term-upload-card loaded" data-dept="electrical" data-sem="semester1">
+        <div class="term-upload-header">
+          <div class="term-upload-icon">1️⃣</div>
+          <div>
+            <div class="term-upload-name">الفصل الأول</div>
+            <div class="term-upload-status">
+              ✅ محمّل
+            </div>
+          </div>
+        </div>
+        
+          <div class="term-file-info">
+            <div class="fname">مدمج في HTML</div>
+            <div class="frow"><span>الطلاب:</span><strong>1</strong></div>
+            
+          </div>
+        
+        <div class="term-actions">
+          
+            <button class="mini-btn primary" onclick="event.stopPropagation(); document.getElementById('file-electrical-semester1').click();">
+              🔄 استبدال
+            </button>
+            <button class="mini-btn danger" onclick="event.stopPropagation(); clearSemester('electrical','semester1');">
+              🗑️ حذف
+            </button>
+          
+        </div>
+        <input type="file" id="file-electrical-semester1" accept=".xlsx,.xls,.csv" hidden="" onchange="handleFileUpload(event, 'electrical', 'semester1')">
+      </div>
+    
+      <div class="term-upload-card changed" data-dept="electrical" data-sem="semester2">
+        <div class="term-upload-header">
+          <div class="term-upload-icon">2️⃣</div>
+          <div>
+            <div class="term-upload-name">الفصل الثاني</div>
+            <div class="term-upload-status">
+              🔶 معدّل
+            </div>
+          </div>
+        </div>
+        
+          <div class="term-file-info">
+            <div class="fname">now22 (1).xlsx</div>
+            <div class="frow"><span>الطلاب:</span><strong>3</strong></div>
+            <div class="frow"><span>التاريخ:</span><strong>19‏/09‏/26، 05:15 ص</strong></div>
+          </div>
+        
+        <div class="term-actions">
+          
+            <button class="mini-btn primary" onclick="event.stopPropagation(); document.getElementById('file-electrical-semester2').click();">
+              🔄 استبدال
+            </button>
+            <button class="mini-btn danger" onclick="event.stopPropagation(); clearSemester('electrical','semester2');">
+              🗑️ حذف
+            </button>
+          
+        </div>
+        <input type="file" id="file-electrical-semester2" accept=".xlsx,.xls,.csv" hidden="" onchange="handleFileUpload(event, 'electrical', 'semester2')">
+      </div>
+    
+      <div class="term-upload-card " data-dept="electrical" data-sem="semester3">
+        <div class="term-upload-header">
+          <div class="term-upload-icon">3️⃣</div>
+          <div>
+            <div class="term-upload-name">الفصل الثالث</div>
+            <div class="term-upload-status">
+              ⚠️ فارغ
+            </div>
+          </div>
+        </div>
+        <div class="term-cta">📁 اضغط للاختيار</div>
+        <div class="term-actions">
+          
+        </div>
+        <input type="file" id="file-electrical-semester3" accept=".xlsx,.xls,.csv" hidden="" onchange="handleFileUpload(event, 'electrical', 'semester3')">
+      </div>
+    
+      <div class="term-upload-card " data-dept="electrical" data-sem="semester4">
+        <div class="term-upload-header">
+          <div class="term-upload-icon">4️⃣</div>
+          <div>
+            <div class="term-upload-name">الفصل الرابع</div>
+            <div class="term-upload-status">
+              ⚠️ فارغ
+            </div>
+          </div>
+        </div>
+        <div class="term-cta">📁 اضغط للاختيار</div>
+        <div class="term-actions">
+          
+        </div>
+        <input type="file" id="file-electrical-semester4" accept=".xlsx,.xls,.csv" hidden="" onchange="handleFileUpload(event, 'electrical', 'semester4')">
+      </div>
+    
+      <div class="term-upload-card " data-dept="electrical" data-sem="semester5">
+        <div class="term-upload-header">
+          <div class="term-upload-icon">5️⃣</div>
+          <div>
+            <div class="term-upload-name">الفصل الخامس</div>
+            <div class="term-upload-status">
+              ⚠️ فارغ
+            </div>
+          </div>
+        </div>
+        <div class="term-cta">📁 اضغط للاختيار</div>
+        <div class="term-actions">
+          
+        </div>
+        <input type="file" id="file-electrical-semester5" accept=".xlsx,.xls,.csv" hidden="" onchange="handleFileUpload(event, 'electrical', 'semester5')">
+      </div>
+    
+      <div class="term-upload-card " data-dept="electrical" data-sem="semester6">
+        <div class="term-upload-header">
+          <div class="term-upload-icon">6️⃣</div>
+          <div>
+            <div class="term-upload-name">الفصل السادس</div>
+            <div class="term-upload-status">
+              ⚠️ فارغ
+            </div>
+          </div>
+        </div>
+        <div class="term-cta">📁 اضغط للاختيار</div>
+        <div class="term-actions">
+          
+        </div>
+        <input type="file" id="file-electrical-semester6" accept=".xlsx,.xls,.csv" hidden="" onchange="handleFileUpload(event, 'electrical', 'semester6')">
+      </div>
+    
+    </div>
+  </div>
+
+        <div class="admin-grand-total">
+          <div class="label" data-ar="إجمالي الطلاب (سيكون مدمجاً في HTML الجديد)" data-en="Total students (will be embedded in new HTML)">إجمالي الطلاب (سيكون مدمجاً في HTML الجديد)</div>
+          <div class="value" id="grandTotal">5</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="ann-editor-modal" id="annEditorModal">
+  <div class="ann-editor">
+    <div class="ann-editor-head">
+      <h3 id="annEditorTitle">إضافة إعلان جديد</h3>
+      <button class="modal-close" id="closeAnnEditor">✕</button>
+    </div>
+    <div class="ann-editor-body">
+      <input type="hidden" id="annEditId">
+
+      <div class="form-group">
+        <label data-ar="العنوان" data-en="Title">العنوان</label>
+        <input type="text" id="annTitle" placeholder="مثال: إعلان نتائج الفصل الأول" required="">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label data-ar="التصنيف" data-en="Tag">التصنيف</label>
+          <input type="text" id="annTag" placeholder="مثال: نتائج، تسجيل، فعاليات" list="tagSuggestions">
+          <datalist id="tagSuggestions">
+            <option value="نتائج"></option>
+            <option value="تسجيل"></option>
+            <option value="فعاليات"></option>
+            <option value="ورشة عمل"></option>
+            <option value="إجازة"></option>
+            <option value="امتحانات"></option>
+            <option value="عاجل"></option>
+          </datalist>
+        </div>
+        <div class="form-group">
+          <label data-ar="التاريخ" data-en="Date">التاريخ</label>
+          <input type="date" id="annDate">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label data-ar="نص الإعلان" data-en="Announcement Text">نص الإعلان</label>
+        <textarea id="annBody" placeholder="اكتب نص الإعلان هنا... يمكنك استخدام أسطر متعددة" required=""></textarea>
+      </div>
+
+      <div class="form-group">
+        <label data-ar="صورة الإعلان" data-en="Announcement Image">صورة الإعلان</label>
+        <div id="imageZone"></div>
+        <div class="form-hint" data-ar="📌 يُفضّل استخدام صور بحجم أقل من 500 كيلوبايت" data-en="📌 Preferred image size under 500KB">📌 يُفضّل استخدام صور بحجم أقل من 500 كيلوبايت</div>
+        <input type="file" id="annImageInput" accept="image/*" hidden="">
+      </div>
+
+      <div class="form-group">
+        <label data-ar="رابط الفيديو" data-en="Video URL">رابط الفيديو</label>
+        <input type="url" id="annVideoUrl" placeholder="https://www.youtube.com/watch?v=...">
+        <div class="form-hint" data-ar="🎬 يدعم: YouTube, Vimeo, أو رابط فيديو مباشر (MP4)" data-en="🎬 Supports: YouTube, Vimeo, or direct video URL (MP4)">🎬 يدعم: YouTube, Vimeo, أو رابط فيديو مباشر (MP4)</div>
+        <div id="videoPreviewContainer"></div>
+      </div>
+
+      <div class="ann-editor-actions">
+        <button class="btn btn-danger" id="cancelAnnEdit">
+          ❌ <span data-ar="إلغاء" data-en="Cancel">إلغاء</span>
+        </button>
+        <button class="btn btn-gold" id="saveAnn">
+          💾 <span data-ar="حفظ الإعلان" data-en="Save Announcement">حفظ الإعلان</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="preview-overlay" id="previewModal">
+  <div class="preview-modal">
+    <div class="preview-head">
+      <h3 data-ar="معاينة الملف قبل الاستيراد" data-en="Preview File Before Import">معاينة الملف قبل الاستيراد</h3>
+      <button class="modal-close" id="closePreview">✕</button>
+    </div>
+    <div class="preview-body" id="previewBody">
+    <div class="preview-step">
+      <h4><span class="step-num">1</span> معلومات الملف</h4>
+      <div class="file-info-box">
+        <div>🏢 <strong>القسم:</strong> <span>الهندسة الكهربائية</span></div>
+        <div>📚 <strong>الفصل:</strong> <span>الفصل الثاني</span></div>
+        <div>📄 <strong>الاسم:</strong> <span>now22 (1).xlsx</span></div>
+        <div>📋 <strong>عدد الصفوف:</strong> <span>3</span></div>
+      </div>
+    </div>
+    <div class="preview-step">
+      <h4><span class="step-num">2</span> معاينة البيانات</h4>
+      <div class="preview-table-wrap">
+        <table class="preview-table">
+          <thead><tr><th>رقم القيد / Student ID</th><th>اسم الطالب / Student Name</th><th>الرياضيات</th><th>الرياضيات2</th><th>الرياضيات3</th><th>الرياضيات33</th><th>(فارغ)</th><th>التقدير / Grade</th><th>المعدل العام / Average</th></tr></thead>
+          <tbody><tr><td class="">555555</td><td class="">khalefha</td><td class="">12</td><td class="">12</td><td class="">12</td><td class="">12</td><td class="empty-cell">—</td><td class="">0.66</td><td class="">2.4</td></tr><tr><td class="">444444</td><td class="">mhamod</td><td class="">55</td><td class="">55</td><td class="">55</td><td class="">55</td><td class="empty-cell">—</td><td class="">0.22</td><td class="">2.5</td></tr><tr><td class="">222222</td><td class="">farg</td><td class="">dd</td><td class="">hh</td><td class="">hhh</td><td class="">hhh</td><td class="empty-cell">—</td><td class="">h</td><td class="empty-cell">—</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="preview-step">
+      <h4><span class="step-num">3</span> ربط الأعمدة</h4>
+      
+      <div class="mapping-grid">
+        <div class="mapping-item"><label>رقم القيد <span class="required">*</span></label><select id="map-id" class="auto-detected" onchange="updateMapping('id', this.value)"><option value="-1">— تجاهل —</option><option value="0" selected="">رقم القيد / Student ID</option><option value="1">اسم الطالب / Student Name</option><option value="2">الرياضيات</option><option value="3">الرياضيات2</option><option value="4">الرياضيات3</option><option value="5">الرياضيات33</option><option value="6">عمود 7</option><option value="7">التقدير / Grade</option><option value="8">المعدل العام / Average</option></select></div>
+        <div class="mapping-item"><label>الاسم <span class="optional">(اختياري)</span></label><select id="map-name" class="auto-detected" onchange="updateMapping('name', this.value)"><option value="-1">— تجاهل —</option><option value="0" selected="">رقم القيد / Student ID</option><option value="1">اسم الطالب / Student Name</option><option value="2">الرياضيات</option><option value="3">الرياضيات2</option><option value="4">الرياضيات3</option><option value="5">الرياضيات33</option><option value="6">عمود 7</option><option value="7">التقدير / Grade</option><option value="8">المعدل العام / Average</option></select></div>
+        <div class="mapping-item"><label>المعدل <span class="optional">(اختياري)</span></label><select id="map-average" class="auto-detected" onchange="updateMapping('average', this.value)"><option value="-1">— تجاهل —</option><option value="0">رقم القيد / Student ID</option><option value="1">اسم الطالب / Student Name</option><option value="2">الرياضيات</option><option value="3">الرياضيات2</option><option value="4">الرياضيات3</option><option value="5">الرياضيات33</option><option value="6">عمود 7</option><option value="7">التقدير / Grade</option><option value="8" selected="">المعدل العام / Average</option></select></div>
+        <div class="mapping-item"><label>التقدير <span class="optional">(اختياري)</span></label><select id="map-grade" class="auto-detected" onchange="updateMapping('grade', this.value)"><option value="-1">— تجاهل —</option><option value="0">رقم القيد / Student ID</option><option value="1">اسم الطالب / Student Name</option><option value="2">الرياضيات</option><option value="3">الرياضيات2</option><option value="4">الرياضيات3</option><option value="5">الرياضيات33</option><option value="6">عمود 7</option><option value="7" selected="">التقدير / Grade</option><option value="8">المعدل العام / Average</option></select></div>
+      </div>
+      <div class="mapped-preview" id="mappedPreview"><div class="mapped-preview-item"><span class="tag term-tag">🏢 القسم</span><strong>الهندسة الكهربائية</strong></div><div class="mapped-preview-item"><span class="tag term-tag">📚 الفصل</span><strong>الفصل الثاني</strong></div><div class="mapped-preview-item"><span class="tag ">رقم القيد</span><strong>رقم القيد / Student ID</strong></div><div class="mapped-preview-item"><span class="tag ">الاسم</span><strong>رقم القيد / Student ID</strong></div><div class="mapped-preview-item"><span class="tag ">المعدل</span><strong>المعدل العام / Average</strong></div><div class="mapped-preview-item"><span class="tag ">التقدير</span><strong>التقدير / Grade</strong></div><div class="mapped-preview-item"><span class="tag subject">المواد (6)</span><strong style="font-size:0.8rem">اسم الطالب / Student Name • الرياضيات • الرياضيات2 • الرياضيات3 • الرياضيات33 • </strong></div></div>
+    </div>
+    <div class="preview-actions">
+      <button class="btn btn-danger" onclick="closePreviewModal()">❌ إلغاء</button>
+      <button class="btn btn-excel" onclick="confirmImport()">✅ تأكيد الاستيراد</button>
+    </div>
+  </div>
+  </div>
+</div>
+
+<div class="toast success" id="toast">✅ تم رفع 3 طالب</div>
+
+<script type="application/json" id="embeddedSettings">
+{
+  "resultsVisible": {
+    "electrical": true,
+    "petroleum": true,
+    "admin": true,
+    "computer": true
+  }
+}
+</script>
+
+<script type="application/json" id="embeddedData">
+{
+  "electrical": {
+    "semester1": [
+      {
+        "id": "1001",
+        "name": "أحمد محمد علي",
+        "subjects": {
+          "الرياضيات": 92,
+          "الفيزياء": 88
+        },
+        "average": 90,
+        "grade": "ممتاز"
+      }
+    ],
+    "semester2": [
+      {
+        "id": "555555",
+        "name": "555555",
+        "subjects": {
+          "اسم الطالب / Student Name": "khalefha",
+          "الرياضيات": 12,
+          "الرياضيات2": 12,
+          "الرياضيات3": 12,
+          "الرياضيات33": 12
+        },
+        "average": 2.4,
+        "grade": "0.66"
+      },
+      {
+        "id": "444444",
+        "name": "444444",
+        "subjects": {
+          "اسم الطالب / Student Name": "mhamod",
+          "الرياضيات": 55,
+          "الرياضيات2": 55,
+          "الرياضيات3": 55,
+          "الرياضيات33": 55
+        },
+        "average": 2.5,
+        "grade": "0.22"
+      },
+      {
+        "id": "222222",
+        "name": "222222",
+        "subjects": {
+          "اسم الطالب / Student Name": "farg",
+          "الرياضيات": "dd",
+          "الرياضيات2": "hh",
+          "الرياضيات3": "hhh",
+          "الرياضيات33": "hhh"
+        },
+        "average": "",
+        "grade": "h"
+      }
+    ],
+    "semester3": [],
+    "semester4": [],
+    "semester5": [],
+    "semester6": []
+  },
+  "petroleum": {
+    "semester1": [
+      {
+        "id": "2001",
+        "name": "محمد إبراهيم",
+        "subjects": {
+          "هندسة المكامن": 85
+        },
+        "average": 85,
+        "grade": "جيد جداً"
+      }
+    ],
+    "semester2": [],
+    "semester3": [],
+    "semester4": [],
+    "semester5": [],
+    "semester6": []
+  },
+  "admin": {
+    "semester1": [],
+    "semester2": [],
+    "semester3": [],
+    "semester4": [],
+    "semester5": [],
+    "semester6": []
+  },
+  "computer": {
+    "semester1": [],
+    "semester2": [],
+    "semester3": [],
+    "semester4": [],
+    "semester5": [],
+    "semester6": []
+  }
+}
+</script>
+
+<script type="application/json" id="embeddedAnnouncements">
+[
+  {
+    "id": "ann_1",
+    "title": "بدء التسجيل للعام الدراسي الجديد 2025/2026",
+    "body": "يبدأ التسجيل لجميع الأقسام اعتباراً من 15 سبتمبر وحتى 30 سبتمبر.",
+    "tag": "تسجيل",
+    "date": "2025-09-15",
+    "image": null,
+    "videoUrl": null
+  }
+]
+</script>
+
+<script>
+/* =================================================================
+   الإعدادات
+   ================================================================= */
+const ADMIN_PASSWORD = '123456';
+const INSTITUTE_INFO = { facultyCount: 48, studentsCount: 620 };
+
+const DEPARTMENTS = {
+  electrical: { ar: 'الهندسة الكهربائية', en: 'Electrical Engineering', icon: '⚡' },
+  petroleum:  { ar: 'الهندسة النفطية',    en: 'Petroleum Engineering',   icon: '🛢️' },
+  admin:      { ar: 'العلوم الإدارية',    en: 'Administrative Sciences', icon: '📊' },
+  computer:   { ar: 'الحاسوب',            en: 'Computer Science',        icon: '💻' }
+};
+
+const SEMESTERS = {
+  semester1: { ar: 'الفصل الأول',  en: 'Term 1', short_ar: 'ف1', short_en: 'T1', icon: '1️⃣' },
+  semester2: { ar: 'الفصل الثاني', en: 'Term 2', short_ar: 'ف2', short_en: 'T2', icon: '2️⃣' },
+  semester3: { ar: 'الفصل الثالث', en: 'Term 3', short_ar: 'ف3', short_en: 'T3', icon: '3️⃣' },
+  semester4: { ar: 'الفصل الرابع', en: 'Term 4', short_ar: 'ف4', short_en: 'T4', icon: '4️⃣' },
+  semester5: { ar: 'الفصل الخامس', en: 'Term 5', short_ar: 'ف5', short_en: 'T5', icon: '5️⃣' },
+  semester6: { ar: 'الفصل السادس', en: 'Term 6', short_ar: 'ف6', short_en: 'T6', icon: '6️⃣' }
+};
+const SEMESTER_KEYS = Object.keys(SEMESTERS);
+
+/* =================================================================
+   تحميل البيانات المدمجة
+   ================================================================= */
+const EMBEDDED = JSON.parse(document.getElementById('embeddedData').textContent);
+const EMBEDDED_ANN = JSON.parse(document.getElementById('embeddedAnnouncements').textContent);
+const EMBEDDED_SETTINGS = JSON.parse(document.getElementById('embeddedSettings').textContent);
+
+let STUDENTS = JSON.parse(JSON.stringify(EMBEDDED));
+let ANNOUNCEMENTS = JSON.parse(JSON.stringify(EMBEDDED_ANN));
+let RESULTS_VISIBLE = Object.assign({
+  electrical: true, petroleum: true, admin: true, computer: true
+}, EMBEDDED_SETTINGS.resultsVisible || {});
+
+let FILE_META = {};
+let CHANGED = {};
+let ANN_CHANGED = false;
+let VISIBILITY_CHANGED = false;
+
+function initMetaTracking() {
+  Object.keys(DEPARTMENTS).forEach(dept => {
+    FILE_META[dept] = {};
+    CHANGED[dept] = {};
+    SEMESTER_KEYS.forEach(sem => {
+      const count = (EMBEDDED[dept]?.[sem] || []).length;
+      FILE_META[dept][sem] = count > 0
+        ? { fileName: 'مدمج في HTML', uploadedAt: null, count }
+        : { fileName: null, uploadedAt: null, count: 0 };
+      CHANGED[dept][sem] = false;
+    });
+  });
+}
+initMetaTracking();
+
+/* =================================================================
+   الترجمة
+   ================================================================= */
+let currentLang = 'ar';
+const LANG_KEY = 'hist-lang';
+function t(obj) { return obj ? (obj[currentLang] || obj.ar) : ''; }
+
+function setLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem(LANG_KEY, lang);
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-ar]').forEach(el => {
+    const val = el.dataset[lang];
+    if (val) el.textContent = val;
+  });
+  document.querySelectorAll('[data-ar-placeholder]').forEach(el => {
+    const val = el.dataset[lang + 'Placeholder'];
+    if (val) el.placeholder = val;
+  });
+  document.querySelectorAll('.lang-switch button').forEach(b =>
+    b.classList.toggle('active', b.dataset.lang === lang)
+  );
+  renderAnnouncements();
+  renderAllTermTabs();
+  applyResultsVisibility();
+  renderAdminDeptTabs();
+  renderAdminContent();
+  updateGrandTotal();
+  Object.keys(lastResults).forEach(dept => {
+    if (lastResults[dept]) renderResult(dept);
+  });
+}
+
+document.querySelectorAll('.lang-switch button').forEach(btn =>
+  btn.addEventListener('click', () => setLanguage(btn.dataset.lang))
+);
+
+/* =================================================================
+   Toast
+   ================================================================= */
+let toastTimeout;
+function showToast(msg, type = 'info') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast ' + type;
+  el.classList.add('show');
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => el.classList.remove('show'), 4000);
+}
+
+/* =================================================================
+   الهيدر والقائمة
+   ================================================================= */
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 30));
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+menuToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(a =>
+  a.addEventListener('click', () => navLinks.classList.remove('open'))
+);
+
+/* =================================================================
+   العدّاد
+   ================================================================= */
+function animateCount(el, target, duration = 1500) {
+  let start = 0;
+  const step = (timestamp) => {
+    if (!start) start = timestamp;
+    const progress = Math.min((timestamp - start) / duration, 1);
+    el.textContent = Math.floor(progress * target).toLocaleString();
+    if (progress < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+function initStats() {
+  const statsSection = document.getElementById('about');
+  let done = false;
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !done) {
+        done = true;
+        animateCount(document.getElementById('facultyCount'), INSTITUTE_INFO.facultyCount);
+        animateCount(document.getElementById('studentsCount'), INSTITUTE_INFO.studentsCount);
+      }
+    });
+  }, { threshold: 0.3 });
+  observer.observe(statsSection);
+}
+
+/* =================================================================
+   ✨ تطبيق حالة إظهار/إخفاء النتائج
+   ================================================================= */
+function applyResultsVisibility() {
+  Object.keys(DEPARTMENTS).forEach(dept => {
+    const visible = RESULTS_VISIBLE[dept];
+    const available = document.querySelector(`.results-available[data-dept="${dept}"]`);
+    const locked = document.querySelector(`.results-locked[data-dept="${dept}"]`);
+
+    if (available) available.style.display = visible ? 'block' : 'none';
+    if (locked) locked.style.display = visible ? 'none' : 'block';
+
+    // مسح أي نتيجة معروضة إذا تم إخفاء القسم
+    if (!visible) {
+      const area = document.getElementById('result-' + dept);
+      if (area) area.innerHTML = '';
+      lastResults[dept] = null;
+    }
+  });
+}
+
+/* =================================================================
+   تبويبات الفصول في خانات البحث
+   ================================================================= */
+const activeSemester = {
+  electrical: 'semester1', petroleum: 'semester1',
+  admin: 'semester1', computer: 'semester1'
+};
+
+function renderAllTermTabs() {
+  Object.keys(DEPARTMENTS).forEach(dept => {
+    const container = document.querySelector(`.term-tabs[data-dept="${dept}"]`);
+    if (!container) return;
+    container.innerHTML = SEMESTER_KEYS.map(sem => {
+      const count = (STUDENTS[dept][sem] || []).length;
+      const isActive = activeSemester[dept] === sem;
+      return `
+        <button class="term-tab ${isActive ? 'active' : ''}" data-dept="${dept}" data-sem="${sem}">
+          ${SEMESTERS[sem].icon} ${currentLang === 'ar' ? SEMESTERS[sem].ar : SEMESTERS[sem].en}
+          <span class="badge">${count}</span>
+        </button>
+      `;
+    }).join('');
+  });
+
+  document.querySelectorAll('.term-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const dept = btn.dataset.dept;
+      const sem = btn.dataset.sem;
+      activeSemester[dept] = sem;
+      renderAllTermTabs();
+      const area = document.getElementById('result-' + dept);
+      if (area) area.innerHTML = '';
+      lastResults[dept] = null;
+    });
+  });
+}
+
+/* =================================================================
+   البحث
+   ================================================================= */
+const lastResults = {};
+
+document.querySelectorAll('.search-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const dept = btn.dataset.dept;
+    const input = document.querySelector(`.student-input[data-dept="${dept}"]`);
+    searchStudent(dept, input.value.trim());
+  });
+});
+
+document.querySelectorAll('.student-input').forEach(input => {
+  input.addEventListener('keypress', e => {
+    if (e.key === 'Enter') searchStudent(input.dataset.dept, input.value.trim());
+  });
+});
+
+function searchStudent(dept, id) {
+  // ✅ التحقق من حالة الإظهار
+  if (!RESULTS_VISIBLE[dept]) {
+    showToast(currentLang === 'ar'
+      ? '🔒 النتائج غير متاحة لهذا القسم حالياً'
+      : '🔒 Results are not available for this department', 'error');
+    return;
+  }
+
+  const area = document.getElementById('result-' + dept);
+  const sem = activeSemester[dept];
+  if (!id) {
+    area.innerHTML = messageBox('⚠️',
+      currentLang === 'ar' ? 'الرجاء إدخال رقم القيد' : 'Please enter your registration number',
+      currentLang === 'ar' ? 'يجب إدخال رقم القيد للبحث' : 'Registration number is required', true);
+    lastResults[dept] = null;
+    return;
+  }
+  const found = {};
+  let totalFound = 0;
+  SEMESTER_KEYS.forEach(s => {
+    const student = (STUDENTS[dept][s] || []).find(st => String(st.id).trim() === id);
+    if (student) { found[s] = student; totalFound++; }
+  });
+  if (totalFound === 0) {
+    area.innerHTML = messageBox('❌',
+      currentLang === 'ar' ? 'لم يتم العثور على النتيجة' : 'Result not found',
+      currentLang === 'ar' ? 'تأكد من رقم القيد أو تواصل مع شؤون الطلاب' : 'Check your registration number', true);
+    lastResults[dept] = null;
+    return;
+  }
+  const displaySem = found[sem] ? sem : Object.keys(found)[0];
+  lastResults[dept] = { id, found, displaySem };
+  renderResult(dept);
+}
+
+function renderResult(dept) {
+  const data = lastResults[dept];
+  if (!data) return;
+  const area = document.getElementById('result-' + dept);
+  const { found, displaySem } = data;
+  const student = found[displaySem];
+  const deptName = t(DEPARTMENTS[dept]);
+  const semName = t(SEMESTERS[displaySem]);
+  const isAr = currentLang === 'ar';
+  const subjects = Object.entries(student.subjects || {});
+  let avg = student.average;
+  if ((!avg && avg !== 0) && subjects.length) {
+    const nums = subjects.map(([, v]) => parseFloat(v)).filter(n => !isNaN(n));
+    if (nums.length) avg = (nums.reduce((a, b) => a + b, 0) / nums.length).toFixed(1);
+  }
+  let grade = student.grade;
+  if (!grade && avg) {
+    const n = parseFloat(avg);
+    if (n >= 90) grade = isAr ? 'ممتاز' : 'Excellent';
+    else if (n >= 80) grade = isAr ? 'جيد جداً' : 'Very Good';
+    else if (n >= 70) grade = isAr ? 'جيد' : 'Good';
+    else if (n >= 60) grade = isAr ? 'مقبول' : 'Pass';
+    else grade = isAr ? 'راسب' : 'Fail';
+  }
+  const isPass = !grade || !/راسب|fail/i.test(grade);
+  const subjectRows = subjects.map(([name, value]) => `<tr><td>${name}</td><td>${value}</td></tr>`).join('');
+  const availableSemesters = Object.keys(found).sort();
+  const semSwitcher = availableSemesters.length > 1 ? `
+    <div class="result-term-switcher">
+      <span class="switcher-label">${isAr ? 'عرض نتيجة:' : 'View:'}</span>
+      ${availableSemesters.map(s => `
+        <button class="tm-btn ${s === displaySem ? 'active' : ''}" onclick="switchResultSem('${dept}', '${s}')">
+          ${SEMESTERS[s].icon} ${isAr ? SEMESTERS[s].ar : SEMESTERS[s].en}
+        </button>
+      `).join('')}
+    </div>
+  ` : '';
+  area.innerHTML = `
+    <div class="result-card">
+      <div class="result-head">
+        <div>
+          <h3>${student.name}</h3>
+          <p>${isAr ? 'رقم القيد' : 'ID'}: ${student.id}</p>
+        </div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+          <span class="dept-badge">${deptName}</span>
+          <span class="dept-badge" style="background:rgba(139,92,246,.2);border-color:rgba(139,92,246,.4);color:#c4b5fd">${semName}</span>
+        </div>
+      </div>
+      ${semSwitcher}
+      ${subjectRows ? `
+      <table class="result-table">
+        <thead><tr>
+          <th>${isAr ? 'المادة' : 'Subject'}</th>
+          <th style="text-align:end">${isAr ? 'الدرجة' : 'Grade'}</th>
+        </tr></thead>
+        <tbody>${subjectRows}</tbody>
+      </table>` : ''}
+      <div class="result-summary">
+        <div><span>${isAr ? 'المعدل' : 'Average'}</span><strong>${avg || '—'}</strong></div>
+        <div><span>${isAr ? 'التقدير' : 'Grade'}</span><strong class="${isPass ? 'grade-pass' : 'grade-fail'}">${grade || '—'}</strong></div>
+      </div>
+      <div class="result-actions">
+        <button class="btn btn-excel" onclick="downloadExcel('${dept}', '${student.id}', '${displaySem}')">
+          📥 <span data-ar="تحميل Excel" data-en="Download Excel">تحميل Excel</span>
+        </button>
+        <button class="btn btn-print" onclick="printResult('${dept}')">
+          🖨️ <span data-ar="طباعة" data-en="Print">طباعة</span>
+        </button>
+      </div>
+    </div>
+  `;
+  area.querySelectorAll('[data-ar]').forEach(el => {
+    const val = el.dataset[currentLang];
+    if (val) el.textContent = val;
+  });
+  area.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function switchResultSem(dept, sem) {
+  if (!lastResults[dept]) return;
+  lastResults[dept].displaySem = sem;
+  renderResult(dept);
+}
+
+/* =================================================================
+   تحميل Excel للطالب
+   ================================================================= */
+function downloadExcel(dept, studentId, sem) {
+  const student = (STUDENTS[dept][sem] || []).find(s => String(s.id).trim() === String(studentId).trim());
+  if (!student) return;
+  const semName = currentLang === 'ar' ? SEMESTERS[sem].ar : SEMESTERS[sem].en;
+  const rows = [];
+  rows.push(['المعهد العالي للعلوم والتقنية - هراوة']);
+  rows.push(['Higher Institute of Science & Technology - Hrawa']);
+  rows.push([]);
+  rows.push(['القسم / Department', `${DEPARTMENTS[dept].ar} / ${DEPARTMENTS[dept].en}`]);
+  rows.push(['الفصل / Term', semName]);
+  rows.push(['رقم القيد / Student ID', student.id]);
+  rows.push(['اسم الطالب / Student Name', student.name]);
+  rows.push([]);
+  rows.push(['المادة / Subject', 'الدرجة / Grade']);
+  Object.entries(student.subjects).forEach(([name, value]) => rows.push([name, value]));
+  rows.push([]);
+  rows.push(['المعدل العام / Average', student.average || '']);
+  rows.push(['التقدير / Grade', student.grade || '']);
+  rows.push([]);
+  rows.push(['تاريخ الإصدار / Issue Date', new Date().toLocaleDateString('en-GB')]);
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+  ws['!cols'] = [{ wch: 40 }, { wch: 25 }];
+  ws['!merges'] = [
+    { s: { r: 0, c: 0 }, e: { r: 0, c: 1 } },
+    { s: { r: 1, c: 0 }, e: { r: 1, c: 1 } }
+  ];
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, (DEPARTMENTS[dept].ar + ' - ' + SEMESTERS[sem].short_ar).substring(0, 31));
+  XLSX.writeFile(wb, `نتيجة_${student.name}_${student.id}_${SEMESTERS[sem].short_en}.xlsx`);
+}
+
+function printResult(dept) {
+  const section = document.querySelector(`.dept-section[data-dept="${dept}"]`);
+  if (!section) return;
+  document.querySelectorAll('.dept-section').forEach(s => s.classList.remove('printing'));
+  section.classList.add('printing');
+  window.print();
+  setTimeout(() => section.classList.remove('printing'), 1000);
+}
+
+function messageBox(icon, title, text, isError) {
+  return `<div class="message-box ${isError ? 'error' : ''}">
+    <span class="icon">${icon}</span>
+    <h3>${title}</h3>
+    <p>${text}</p>
+  </div>`;
+}
+
+/* =================================================================
+   معالجة الفيديو
+   ================================================================= */
+function getVideoEmbed(url) {
+  if (!url) return null;
+  const u = url.trim();
+  if (!u) return null;
+  let m = u.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+  if (m) return { type: 'iframe', src: `https://www.youtube.com/embed/${m[1]}` };
+  m = u.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  if (m) return { type: 'iframe', src: `https://player.vimeo.com/video/${m[1]}` };
+  m = u.match(/facebook\.com\/.+\/videos\/(\d+)/);
+  if (m) return { type: 'iframe', src: `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(u)}` };
+  if (/\.(mp4|webm|ogg|mov)(\?|$)/i.test(u)) return { type: 'video', src: u };
+  if (/^https?:\/\//i.test(u)) return { type: 'iframe', src: u };
+  return null;
+}
+
+/* =================================================================
+   عرض الإعلانات
+   ================================================================= */
+function escapeHTML(str) {
+  return String(str || '')
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+function formatDate(dateStr, lang) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return dateStr;
+  try {
+    return d.toLocaleDateString(lang === 'ar' ? 'ar-LY' : 'en-GB', { year: 'numeric', month: 'short', day: 'numeric' });
+  } catch { return dateStr; }
+}
+
+function renderAnnouncements() {
+  const grid = document.getElementById('annGrid');
+  if (!grid) return;
+  if (!ANNOUNCEMENTS.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted)">
+      <div style="font-size:3rem;margin-bottom:1rem">📭</div>
+      <p>${currentLang === 'ar' ? 'لا توجد إعلانات حالياً' : 'No announcements at the moment'}</p>
+    </div>`;
+    return;
+  }
+  const sorted = [...ANNOUNCEMENTS].sort((a, b) => {
+    const da = a.date ? new Date(a.date) : 0;
+    const db = b.date ? new Date(b.date) : 0;
+    return db - da;
+  });
+  grid.innerHTML = sorted.map(ann => {
+    const title = escapeHTML(ann.title || '');
+    const body = escapeHTML(ann.body || '');
+    const tag = escapeHTML(ann.tag || '');
+    const dateText = formatDate(ann.date, currentLang);
+    const video = ann.videoUrl ? getVideoEmbed(ann.videoUrl) : null;
+    const hasImage = ann.image && ann.image.startsWith('data:image');
+    let mediaHTML = '';
+    if (video) {
+      if (video.type === 'iframe') {
+        mediaHTML = `<div class="ann-media video-media"><span class="ann-video-badge">▶ ${currentLang === 'ar' ? 'فيديو' : 'Video'}</span><iframe src="${video.src}" allowfullscreen loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>`;
+      } else {
+        mediaHTML = `<div class="ann-media video-media"><span class="ann-video-badge">▶ ${currentLang === 'ar' ? 'فيديو' : 'Video'}</span><video src="${video.src}" controls preload="metadata"></video></div>`;
+      }
+    } else if (hasImage) {
+      mediaHTML = `<div class="ann-media"><img src="${ann.image}" alt="${title}"></div>`;
+    } else {
+      mediaHTML = `<div class="ann-media no-image">📢</div>`;
+    }
+    return `
+      <div class="ann-card">
+        ${mediaHTML}
+        <div class="ann-body">
+          <div class="ann-meta">
+            ${dateText ? `<span class="ann-date-badge">${dateText}</span>` : ''}
+            ${tag ? `<span class="ann-tag">${tag}</span>` : ''}
+          </div>
+          <h3>${title}</h3>
+          <p>${body}</p>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+/* =================================================================
+ لوحة الإدارة
+   ================================================================= */
+const adminModal = document.getElementById('adminModal');
+const loginScreen = document.getElementById('loginScreen');
+const adminPanel = document.getElementById('adminPanel');
+const loginError = document.getElementById('loginError');
+const isAdmin = { value: false };
+
+document.getElementById('openAdmin').addEventListener('click', () => {
+  adminModal.classList.add('open');
+  if (isAdmin.value) {
+    loginScreen.style.display = 'none';
+    adminPanel.classList.add('active');
+    renderAdminDeptTabs();
+    renderAdminContent();
+    updateGrandTotal();
+  } else {
+    loginScreen.style.display = 'block';
+    adminPanel.classList.remove('active');
+    document.getElementById('adminPassword').value = '';
+    loginError.textContent = '';
+  }
+});
+
+document.getElementById('closeAdmin').addEventListener('click', () => adminModal.classList.remove('open'));
+adminModal.addEventListener('click', e => { if (e.target === adminModal) adminModal.classList.remove('open'); });
+document.getElementById('loginBtn').addEventListener('click', tryLogin);
+document.getElementById('adminPassword').addEventListener('keypress', e => { if (e.key === 'Enter') tryLogin(); });
+
+function tryLogin() {
+  const pwd = document.getElementById('adminPassword').value;
+  if (pwd === ADMIN_PASSWORD) {
+    isAdmin.value = true;
+    loginError.textContent = '';
+    loginScreen.style.display = 'none';
+    adminPanel.classList.add('active');
+    renderAdminDeptTabs();
+    renderAdminContent();
+    updateGrandTotal();
+  } else {
+    loginError.textContent = currentLang === 'ar' ? '❌ كلمة المرور غير صحيحة' : '❌ Incorrect password';
+    document.getElementById('adminPassword').value = '';
+  }
+}
+
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  isAdmin.value = false;
+  document.getElementById('adminPassword').value = '';
+  loginScreen.style.display = 'block';
+  adminPanel.classList.remove('active');
+});
+
+let activeAdminTab = 'electrical';
+
+function renderAdminDeptTabs() {
+  const container = document.getElementById('adminDeptTabs');
+  if (!container) return;
+  const deptTabs = Object.keys(DEPARTMENTS).map(dept => `
+    <button class="admin-dept-tab ${activeAdminTab === dept ? 'active' : ''}" data-tab="${dept}">
+      ${DEPARTMENTS[dept].icon} ${t(DEPARTMENTS[dept])}
+      ${!RESULTS_VISIBLE[dept] ? '<span style="background:rgba(220,38,38,.3);padding:1px 6px;border-radius:50px;font-size:.65rem">🔒</span>' : ''}
+    </button>
+  `).join('');
+  const annTab = `
+    <button class="admin-dept-tab ann-tab ${activeAdminTab === 'announcements' ? 'active' : ''}" data-tab="announcements">
+      📢 ${currentLang === 'ar' ? 'الإعلانات' : 'Announcements'}
+      <span style="background:rgba(255,255,255,.25);padding:1px 8px;border-radius:50px;font-size:.7rem;font-weight:800">${ANNOUNCEMENTS.length}</span>
+    </button>
+  `;
+  container.innerHTML = deptTabs + annTab;
+  container.querySelectorAll('.admin-dept-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeAdminTab = btn.dataset.tab;
+      renderAdminDeptTabs();
+      renderAdminContent();
+    });
+  });
+}
+
+function renderAdminContent() {
+  if (activeAdminTab === 'announcements') {
+    renderAdminAnnouncements();
+  } else {
+    renderAdminDeptContent();
+  }
+}
+
+function renderAdminDeptContent() {
+  const container = document.getElementById('adminDeptContent');
+  if (!container) return;
+  const dept = activeAdminTab;
+  const isAr = currentLang === 'ar';
+  const visible = RESULTS_VISIBLE[dept];
+
+  let deptTotal = 0;
+  SEMESTER_KEYS.forEach(sem => { deptTotal += (STUDENTS[dept][sem] || []).length; });
+
+  const semCards = SEMESTER_KEYS.map(sem => {
+    const count = (STUDENTS[dept][sem] || []).length;
+    const meta = FILE_META[dept][sem] || {};
+    const loaded = count > 0;
+    const changed = CHANGED[dept][sem];
+    const cls = changed ? 'changed' : (loaded ? 'loaded' : '');
+    const date = meta.uploadedAt
+      ? new Date(meta.uploadedAt).toLocaleString(isAr ? 'ar-LY' : 'en-GB', {
+          year: '2-digit', month: '2-digit', day: '2-digit',
+          hour: '2-digit', minute: '2-digit'
+        })
+      : '';
+    return `
+      <div class="term-upload-card ${cls}" data-dept="${dept}" data-sem="${sem}">
+        <div class="term-upload-header">
+          <div class="term-upload-icon">${SEMESTERS[sem].icon}</div>
+          <div>
+            <div class="term-upload-name">${isAr ? SEMESTERS[sem].ar : SEMESTERS[sem].en}</div>
+            <div class="term-upload-status">
+              ${changed ? `🔶 ${isAr ? 'معدّل' : 'Changed'}`
+                : loaded ? `✅ ${isAr ? 'محمّل' : 'Loaded'}`
+                : `⚠️ ${isAr ? 'فارغ' : 'Empty'}`}
+            </div>
+          </div>
+        </div>
+        ${loaded ? `
+          <div class="term-file-info">
+            <div class="fname">${meta.fileName || '—'}</div>
+            <div class="frow"><span>${isAr ? 'الطلاب:' : 'Students:'}</span><strong>${count}</strong></div>
+            ${date ? `<div class="frow"><span>${isAr ? 'التاريخ:' : 'Date:'}</span><strong>${date}</strong></div>` : ''}
+          </div>
+        ` : `<div class="term-cta">📁 ${isAr ? 'اضغط للاختيار' : 'Click to browse'}</div>`}
+        <div class="term-actions">
+          ${loaded ? `
+            <button class="mini-btn primary" onclick="event.stopPropagation(); document.getElementById('file-${dept}-${sem}').click();">
+              🔄 ${isAr ? 'استبدال' : 'Replace'}
+            </button>
+            <button class="mini-btn danger" onclick="event.stopPropagation(); clearSemester('${dept}','${sem}');">
+              🗑️ ${isAr ? 'حذف' : 'Delete'}
+            </button>
+          ` : ''}
+        </div>
+        <input type="file" id="file-${dept}-${sem}" accept=".xlsx,.xls,.csv" hidden
+               onchange="handleFileUpload(event, '${dept}', '${sem}')">
+      </div>
+    `;
+  }).join('');
+
+  container.innerHTML = `
+    <div class="admin-dept-summary">
+      <div class="item">
+        <span>${isAr ? 'القسم:' : 'Department:'}</span>
+        <strong>${t(DEPARTMENTS[dept])}</strong>
+      </div>
+      <div class="item">
+        <span>${isAr ? 'إجمالي الطلاب:' : 'Total students:'}</span>
+        <strong>${deptTotal}</strong>
+      </div>
+      <div class="item">
+        <span>${isAr ? 'الفصول:' : 'Terms:'}</span>
+        <strong>6</strong>
+      </div>
+      <button class="visibility-toggle ${visible ? 'visible' : 'hidden'}"
+              onclick="toggleResultsVisibility('${dept}')"
+              title="${visible ? (isAr ? 'اضغط لإخفاء النتائج' : 'Click to hide results') : (isAr ? 'اضغط لإظهار النتائج' : 'Click to show results')}">
+        <span class="toggle-icon">${visible ? '👁️' : '🔒'}</span>
+        <span class="toggle-text">
+          <small>${isAr ? 'حالة النتائج في الموقع' : 'Results status'}</small>
+          <strong>${visible ? (isAr ? 'ظاهرة' : 'Visible') : (isAr ? 'مخفية' : 'Hidden')}</strong>
+        </span>
+      </button>
+    </div>
+    <div class="term-upload-grid">
+      ${semCards}
+    </div>
+  `;
+
+  container.querySelectorAll('.term-upload-card').forEach(card => {
+    card.addEventListener('click', e => {
+      if (e.target.closest('button')) return;
+      if (card.classList.contains('loaded') || card.classList.contains('changed')) return;
+      const d = card.dataset.dept;
+      const s = card.dataset.sem;
+      document.getElementById(`file-${d}-${s}`).click();
+    });
+  });
+}
+
+/* =================================================================
+   ✨ تبديل حالة إظهار/إخفاء النتائج
+   ================================================================= */
+function toggleResultsVisibility(dept) {
+  const isAr = currentLang === 'ar';
+  RESULTS_VISIBLE[dept] = !RESULTS_VISIBLE[dept];
+  VISIBILITY_CHANGED = true;
+
+  applyResultsVisibility();
+  renderAdminDeptTabs();
+  renderAdminDeptContent();
+
+  const nowVisible = RESULTS_VISIBLE[dept];
+  showToast(
+    isAr
+      ? (nowVisible
+          ? `✅ تم إظهار نتائج ${t(DEPARTMENTS[dept])} في الموقع`
+          : `🔒 تم إخفاء نتائج ${t(DEPARTMENTS[dept])} من الموقع`)
+      : (nowVisible
+          ? `✅ ${t(DEPARTMENTS[dept])} results are now visible`
+          : `🔒 ${t(DEPARTMENTS[dept])} results are now hidden`),
+    nowVisible ? 'success' : 'info'
+  );
+}
+
+function updateGrandTotal() {
+  let total = 0;
+  Object.keys(DEPARTMENTS).forEach(dept => {
+    SEMESTER_KEYS.forEach(sem => { total += (STUDENTS[dept][sem] || []).length; });
+  });
+  const el = document.getElementById('grandTotal');
+  if (el) el.textContent = total.toLocaleString();
+}
+
+/* =================================================================
+   إدارة الإعلانات
+   ================================================================= */
+function renderAdminAnnouncements() {
+  const container = document.getElementById('adminDeptContent');
+  if (!container) return;
+  const isAr = currentLang === 'ar';
+  const sorted = [...ANNOUNCEMENTS].sort((a, b) => {
+    const da = a.date ? new Date(a.date) : 0;
+    const db = b.date ? new Date(b.date) : 0;
+    return db - da;
+  });
+  let listHTML = '';
+  if (!sorted.length) {
+    listHTML = `<div style="text-align:center;padding:3rem;background:var(--bg);border-radius:16px;color:var(--muted)">
+      <div style="font-size:3rem;margin-bottom:1rem">📭</div>
+      <p>${isAr ? 'لا توجد إعلانات. أضف إعلانك الأول!' : 'No announcements yet. Add your first one!'}</p>
+    </div>`;
+  } else {
+    listHTML = `<div class="ann-admin-list">
+      ${sorted.map(ann => {
+        const hasImage = ann.image && ann.image.startsWith('data:image');
+        const hasVideo = !!ann.videoUrl;
+        const dateText = formatDate(ann.date, currentLang);
+        return `
+          <div class="ann-admin-item">
+            <div class="ann-admin-thumb">
+              ${hasImage ? `<img src="${ann.image}" alt="">` : (hasVideo ? '🎬' : '📢')}
+            </div>
+            <div class="ann-admin-info">
+              <h4>${escapeHTML(ann.title || '')}</h4>
+              <div class="meta">
+                ${dateText ? `<span>📅 ${dateText}</span>` : ''}
+                ${ann.tag ? `<span>🏷️ ${escapeHTML(ann.tag)}</span>` : ''}
+                ${hasImage ? `<span>🖼️ ${isAr ? 'صورة' : 'Image'}</span>` : ''}
+                ${hasVideo ? `<span>🎬 ${isAr ? 'فيديو' : 'Video'}</span>` : ''}
+              </div>
+              <p class="preview">${escapeHTML(ann.body || '')}</p>
+            </div>
+            <div class="ann-admin-actions">
+              <button class="mini-btn edit" onclick="editAnnouncement('${ann.id}')">✏️ ${isAr ? 'تعديل' : 'Edit'}</button>
+              <button class="mini-btn danger" onclick="deleteAnnouncement('${ann.id}')">🗑️ ${isAr ? 'حذف' : 'Delete'}</button>
+            </div>
+          </div>`;
+      }).join('')}
+    </div>`;
+  }
+  container.innerHTML = `
+    <div class="ann-admin-header">
+      <h3>${isAr ? 'إدارة الإعلانات' : 'Manage Announcements'} (${ANNOUNCEMENTS.length})</h3>
+      <button class="btn btn-gold btn-sm" onclick="openAnnEditor()">➕ ${isAr ? 'إضافة إعلان جديد' : 'Add New Announcement'}</button>
+    </div>
+    ${ANN_CHANGED ? `
+      <div class="upload-tip" style="background:#fef3c7;border-color:#fcd34d;margin-bottom:1rem">
+        <strong>🔶 ${isAr ? 'لديك تغييرات غير مُصدَّرة' : 'You have unsaved changes'}</strong>
+        <span>${isAr ? 'تذكّر الضغط على "تنزيل ملف HTML الجديد"' : 'Remember to click "Download New HTML File"'}</span>
+      </div>` : ''}
+    ${listHTML}
+  `;
+}
+
+/* =================================================================
+   محرر الإعلان
+   ================================================================= */
+const annEditorModal = document.getElementById('annEditorModal');
+let currentImageData = null;
+
+function openAnnEditor(annId = null) {
+  const isAr = currentLang === 'ar';
+  const titleEl = document.getElementById('annEditorTitle');
+  const form = {
+    id: document.getElementById('annEditId'),
+    title: document.getElementById('annTitle'),
+    tag: document.getElementById('annTag'),
+    date: document.getElementById('annDate'),
+    body: document.getElementById('annBody'),
+    videoUrl: document.getElementById('annVideoUrl')
+  };
+  if (annId) {
+    const ann = ANNOUNCEMENTS.find(a => a.id === annId);
+    if (!ann) return;
+    titleEl.textContent = isAr ? 'تعديل الإعلان' : 'Edit Announcement';
+    form.id.value = ann.id;
+    form.title.value = ann.title || '';
+    form.tag.value = ann.tag || '';
+    form.date.value = ann.date || '';
+    form.body.value = ann.body || '';
+    form.videoUrl.value = ann.videoUrl || '';
+    currentImageData = ann.image || null;
+  } else {
+    titleEl.textContent = isAr ? 'إضافة إعلان جديد' : 'Add New Announcement';
+    form.id.value = '';
+    form.title.value = '';
+    form.tag.value = '';
+    form.date.value = new Date().toISOString().split('T')[0];
+    form.body.value = '';
+    form.videoUrl.value = '';
+    currentImageData = null;
+  }
+  renderImageZone();
+  renderVideoPreview();
+  annEditorModal.classList.add('open');
+}
+function closeAnnEditor() {
+  annEditorModal.classList.remove('open');
+  currentImageData = null;
+}
+document.getElementById('closeAnnEditor').addEventListener('click', closeAnnEditor);
+document.getElementById('cancelAnnEdit').addEventListener('click', closeAnnEditor);
+annEditorModal.addEventListener('click', e => { if (e.target === annEditorModal) closeAnnEditor(); });
+
+function renderImageZone() {
+  const zone = document.getElementById('imageZone');
+  const isAr = currentLang === 'ar';
+  if (currentImageData && currentImageData.startsWith('data:image')) {
+    zone.innerHTML = `<div class="image-upload-zone has-image"><div class="image-preview"><img src="${currentImageData}" alt="preview"><button type="button" class="image-remove" onclick="removeImage(event)">✕</button></div></div>`;
+  } else {
+    zone.innerHTML = `<div class="image-upload-zone" onclick="document.getElementById('annImageInput').click()"><span class="icon">🖼️</span><p>${isAr ? 'اضغط لاختيار صورة من جهازك' : 'Click to choose an image'}</p><small>PNG, JPG, JPEG, WebP</small></div>`;
+  }
+}
+function removeImage(e) { e.stopPropagation(); currentImageData = null; renderImageZone(); }
+
+document.getElementById('annImageInput').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  if (!file.type.startsWith('image/')) { showToast(currentLang === 'ar' ? '❌ صورة غير صحيحة' : '❌ Invalid image', 'error'); return; }
+  const maxSize = 2 * 1024 * 1024;
+  if (file.size > maxSize) { showToast(currentLang === 'ar' ? '❌ حجم الصورة كبير جداً (2 ميجا)' : '❌ Image too large', 'error'); return; }
+  const reader = new FileReader();
+  reader.onload = ev => {
+    currentImageData = ev.target.result;
+    renderImageZone();
+    if (file.size > 500 * 1024) showToast(currentLang === 'ar' ? '⚠️ الصورة كبيرة — قد يزيد حجم HTML' : '⚠️ Large image', 'info');
+  };
+  reader.readAsDataURL(file);
+  e.target.value = '';
+});
+
+function renderVideoPreview() {
+  const container = document.getElementById('videoPreviewContainer');
+  const url = document.getElementById('annVideoUrl').value.trim();
+  if (!url) { container.innerHTML = ''; return; }
+  const embed = getVideoEmbed(url);
+  if (!embed) { container.innerHTML = ''; return; }
+  if (embed.type === 'iframe') {
+    container.innerHTML = `<div class="video-preview"><iframe src="${embed.src}" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>`;
+  } else {
+    container.innerHTML = `<div class="video-preview"><video src="${embed.src}" controls></video></div>`;
+  }
+}
+document.getElementById('annVideoUrl').addEventListener('input', () => {
+  clearTimeout(window._videoTimeout);
+  window._videoTimeout = setTimeout(renderVideoPreview, 500);
+});
+
+document.getElementById('saveAnn').addEventListener('click', () => {
+  const isAr = currentLang === 'ar';
+  const id = document.getElementById('annEditId').value;
+  const title = document.getElementById('annTitle').value.trim();
+  const tag = document.getElementById('annTag').value.trim();
+  const date = document.getElementById('annDate').value;
+  const body = document.getElementById('annBody').value.trim();
+  const videoUrl = document.getElementById('annVideoUrl').value.trim();
+  if (!title) { showToast(isAr ? '⚠️ الرجاء إدخال عنوان الإعلان' : '⚠️ Title required', 'error'); return; }
+  if (!body) { showToast(isAr ? '⚠️ الرجاء إدخال نص الإعلان' : '⚠️ Body required', 'error'); return; }
+  const annData = {
+    id: id || 'ann_' + Date.now(),
+    title, body, tag,
+    date: date || new Date().toISOString().split('T')[0],
+    image: currentImageData || null,
+    videoUrl: videoUrl || null
+  };
+  if (id) {
+    const idx = ANNOUNCEMENTS.findIndex(a => a.id === id);
+    if (idx >= 0) ANNOUNCEMENTS[idx] = annData;
+  } else {
+    ANNOUNCEMENTS.push(annData);
+  }
+  ANN_CHANGED = true;
+  closeAnnEditor();
+  renderAnnouncements();
+  renderAdminAnnouncements();
+  renderAdminDeptTabs();
+  showToast(isAr ? '✅ تم حفظ الإعلان — تذكّر توليد HTML' : '✅ Saved — remember to generate HTML', 'success');
+});
+
+function editAnnouncement(id) { openAnnEditor(id); }
+function deleteAnnouncement(id) {
+  const isAr = currentLang === 'ar';
+  if (!confirm(isAr ? 'هل تريد حذف هذا الإعلان؟' : 'Delete this announcement?')) return;
+  const idx = ANNOUNCEMENTS.findIndex(a => a.id === id);
+  if (idx < 0) return;
+  ANNOUNCEMENTS.splice(idx, 1);
+  ANN_CHANGED = true;
+  renderAnnouncements();
+  renderAdminAnnouncements();
+  renderAdminDeptTabs();
+  showToast(isAr ? '✅ تم حذف الإعلان' : '✅ Deleted', 'success');
+}
+
+/* =================================================================
+   قراءة Excel
+   ================================================================= */
+let currentPreview = null;
+const ID_KEYWORDS = ['رقم القيد', 'الرقم الجامعي', 'رقم الطالب', 'كود الطالب', 'رقم التسجيل', 'id', 'student id', 'student_id', 'reg', 'registration', 'code', 'no', 'number', 'الرقم'];
+const NAME_KEYWORDS = ['اسم الطالب', 'الاسم الكامل', 'الاسم', 'name', 'student name', 'full name', 'student'];
+const AVG_KEYWORDS = ['المعدل العام', 'المعدل', 'average', 'avg', 'gpa', 'mean', 'متوسط'];
+const GRADE_KEYWORDS = ['التقدير', 'النتيجة النهائية', 'النتيجة', 'grade', 'result', 'status', 'final'];
+
+function normalizeText(s) {
+  return String(s || '').trim().toLowerCase()
+    .replace(/\s+/g, ' ').replace(/[أإآٱ]/g, 'ا').replace(/ى/g, 'ي')
+    .replace(/ة/g, 'ه').replace(/[^\u0600-\u06FFa-z0-9 ]/g, '').trim();
+}
+function matchKeyword(header, keywords) {
+  const h = normalizeText(header);
+  if (!h) return false;
+  return keywords.some(k => {
+    const nk = normalizeText(k);
+    return h === nk || h.includes(nk) || nk.includes(h);
+  });
+}
+function readFileAsRows(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      try {
+        const wb = XLSX.read(e.target.result, { type: 'array' });
+        const ws = wb.Sheets[wb.SheetNames[0]];
+        const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '', blankrows: false });
+        resolve({ rows, sheetName: wb.SheetNames[0] });
+      } catch (err) { reject(err); }
+    };
+    reader.onerror = reject;
+    reader.readAsArrayBuffer(file);
+  });
+}
+function detectHeaderRow(rows) {
+  for (let i = 0; i < Math.min(rows.length, 10); i++) {
+    const row = rows[i];
+    if (!row || !row.length) continue;
+    const nonEmpty = row.filter(c => c !== '' && c !== null && c !== undefined).length;
+    const textCells = row.filter(c => typeof c === 'string' && c.trim().length > 1).length;
+    if (nonEmpty >= 3 && textCells >= 2) return i;
+  }
+  return 0;
+}
+function autoDetectColumn(headers, keywords) {
+  for (let i = 0; i < headers.length; i++) if (matchKeyword(headers[i], keywords)) return i;
+  return -1;
+}
+
+function handleFileUpload(event, dept, sem) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const validExts = ['.xlsx', '.xls', '.csv'];
+  const ext = '.' + file.name.split('.').pop().toLowerCase();
+  if (!validExts.includes(ext)) {
+    showToast(currentLang === 'ar' ? '❌ اختر ملف Excel صحيح' : '❌ Invalid Excel file', 'error');
+    event.target.value = '';
+    return;
+  }
+  buildPreview(file, dept, sem);
+}
+
+function buildPreview(file, dept, sem) {
+  readFileAsRows(file).then(({ rows, sheetName }) => {
+    if (!rows.length) { showToast(currentLang === 'ar' ? '❌ الملف فارغ!' : '❌ File is empty!', 'error'); return; }
+    const headerRowIndex = detectHeaderRow(rows);
+    const headers = rows[headerRowIndex].map(h => String(h || '').trim());
+    const dataRows = rows.slice(headerRowIndex + 1).filter(r =>
+      r.some(c => c !== '' && c !== null && c !== undefined)
+    );
+    const autoMap = {
+      id: autoDetectColumn(headers, ID_KEYWORDS),
+      name: autoDetectColumn(headers, NAME_KEYWORDS),
+      average: autoDetectColumn(headers, AVG_KEYWORDS),
+      grade: autoDetectColumn(headers, GRADE_KEYWORDS)
+    };
+    currentPreview = {
+      dept, sem, file, headers, dataRows, headerRowIndex, sheetName,
+      mapping: {
+        id: autoMap.id,
+        name: autoMap.name,
+        average: autoMap.average,
+        grade: autoMap.grade,
+        subjects: headers.map((_, i) => i).filter(i =>
+          ![autoMap.id, autoMap.name, autoMap.average, autoMap.grade].includes(i)
+        )
+      }
+    };
+    openPreviewModal();
+  }).catch(err => {
+    console.error(err);
+    showToast(currentLang === 'ar' ? '❌ فشل في قراءة الملف' : '❌ Failed to read file', 'error');
+  });
+}
+
+function openPreviewModal() {
+  document.getElementById('previewModal').classList.add('open');
+  renderPreviewContent();
+}
+
+function renderPreviewContent() {
+  const body = document.getElementById('previewBody');
+  if (!currentPreview) return;
+  const { headers, dataRows, mapping, file, dept, sem } = currentPreview;
+  const isAr = currentLang === 'ar';
+  const deptName = t(DEPARTMENTS[dept]);
+  const semName = t(SEMESTERS[sem]);
+  const hasIdError = mapping.id === -1;
+  const columnOptions = (selected) => {
+    let html = `<option value="-1">${isAr ? '— تجاهل —' : '— Ignore —'}</option>`;
+    headers.forEach((h, i) => {
+      const label = h || `${isAr ? 'عمود' : 'Column'} ${i + 1}`;
+      html += `<option value="${i}" ${i === selected ? 'selected' : ''}>${label}</option>`;
+    });
+    return html;
+  };
+  const previewRows = dataRows.slice(0, 5);
+  const tableHeaders = headers.map(h => `<th>${h || `(${isAr ? 'فارغ' : 'empty'})`}</th>`).join('');
+  const tableBody = previewRows.map(row => {
+    const cells = headers.map((_, i) => {
+      const val = row[i] !== undefined && row[i] !== null ? row[i] : '';
+      return `<td class="${val === '' ? 'empty-cell' : ''}">${val || '—'}</td>`;
+    }).join('');
+    return `<tr>${cells}</tr>`;
+  }).join('');
+  let warningHTML = '';
+  if (hasIdError) {
+    warningHTML = `<div class="warning-box show">
+      <strong>⚠️ ${isAr ? 'تنبيه:' : 'Warning:'}</strong>
+      <ul><li>${isAr ? 'لم يتم التعرف على عمود "رقم القيد"' : 'ID column not detected'}</li></ul>
+    </div>`;
+  }
+  body.innerHTML = `
+    <div class="preview-step">
+      <h4><span class="step-num">1</span> ${isAr ? 'معلومات الملف' : 'File Info'}</h4>
+      <div class="file-info-box">
+        <div>🏢 <strong>${isAr ? 'القسم:' : 'Department:'}</strong> <span>${deptName}</span></div>
+        <div>📚 <strong>${isAr ? 'الفصل:' : 'Term:'}</strong> <span>${semName}</span></div>
+        <div>📄 <strong>${isAr ? 'الاسم:' : 'Name:'}</strong> <span>${file.name}</span></div>
+        <div>📋 <strong>${isAr ? 'عدد الصفوف:' : 'Rows:'}</strong> <span>${dataRows.length}</span></div>
+      </div>
+    </div>
+    <div class="preview-step">
+      <h4><span class="step-num">2</span> ${isAr ? 'معاينة البيانات' : 'Data Preview'}</h4>
+      <div class="preview-table-wrap">
+        <table class="preview-table">
+          <thead><tr>${tableHeaders}</tr></thead>
+          <tbody>${tableBody}</tbody>
+        </table>
+      </div>
+    </div>
+    <div class="preview-step">
+      <h4><span class="step-num">3</span> ${isAr ? 'ربط الأعمدة' : 'Column Mapping'}</h4>
+      ${warningHTML}
+      <div class="mapping-grid">
+        <div class="mapping-item"><label>${isAr ? 'رقم القيد' : 'ID'} <span class="required">*</span></label><select id="map-id" class="${mapping.id !== -1 ? 'auto-detected' : ''}" onchange="updateMapping('id', this.value)">${columnOptions(mapping.id)}</select></div>
+        <div class="mapping-item"><label>${isAr ? 'الاسم' : 'Name'} <span class="optional">(${isAr ? 'اختياري' : 'opt'})</span></label><select id="map-name" class="${mapping.name !== -1 ? 'auto-detected' : ''}" onchange="updateMapping('name', this.value)">${columnOptions(mapping.name)}</select></div>
+        <div class="mapping-item"><label>${isAr ? 'المعدل' : 'Average'} <span class="optional">(${isAr ? 'اختياري' : 'opt'})</span></label><select id="map-average" class="${mapping.average !== -1 ? 'auto-detected' : ''}" onchange="updateMapping('average', this.value)">${columnOptions(mapping.average)}</select></div>
+        <div class="mapping-item"><label>${isAr ? 'التقدير' : 'Grade'} <span class="optional">(${isAr ? 'اختياري' : 'opt'})</span></label><select id="map-grade" class="${mapping.grade !== -1 ? 'auto-detected' : ''}" onchange="updateMapping('grade', this.value)">${columnOptions(mapping.grade)}</select></div>
+      </div>
+      <div class="mapped-preview" id="mappedPreview">${renderMappedPreview()}</div>
+    </div>
+    <div class="preview-actions">
+      <button class="btn btn-danger" onclick="closePreviewModal()">❌ ${isAr ? 'إلغاء' : 'Cancel'}</button>
+      <button class="btn btn-excel" onclick="confirmImport()" ${hasIdError ? 'disabled style="opacity:.5;cursor:not-allowed"' : ''}>✅ ${isAr ? 'تأكيد الاستيراد' : 'Confirm'}</button>
+    </div>
+  `;
+}
+
+function renderMappedPreview() {
+  const { headers, mapping, dept, sem } = currentPreview;
+  const isAr = currentLang === 'ar';
+  const items = [];
+  items.push(`<div class="mapped-preview-item"><span class="tag term-tag">🏢 ${isAr ? 'القسم' : 'Dept'}</span><strong>${t(DEPARTMENTS[dept])}</strong></div>`);
+  items.push(`<div class="mapped-preview-item"><span class="tag term-tag">📚 ${isAr ? 'الفصل' : 'Term'}</span><strong>${t(SEMESTERS[sem])}</strong></div>`);
+  const addItem = (tag, tagClass, headerIdx) => {
+    if (headerIdx !== -1) items.push(`<div class="mapped-preview-item"><span class="tag ${tagClass}">${tag}</span><strong>${headers[headerIdx]}</strong></div>`);
+  };
+  addItem(isAr ? 'رقم القيد' : 'ID', '', mapping.id);
+  addItem(isAr ? 'الاسم' : 'Name', '', mapping.name);
+  addItem(isAr ? 'المعدل' : 'Average', '', mapping.average);
+  addItem(isAr ? 'التقدير' : 'Grade', '', mapping.grade);
+  const subjectCols = mapping.subjects || [];
+  if (subjectCols.length) {
+    const names = subjectCols.map(i => headers[i]).join(' • ');
+    items.push(`<div class="mapped-preview-item"><span class="tag subject">${isAr ? 'المواد' : 'Subjects'} (${subjectCols.length})</span><strong style="font-size:0.8rem">${names}</strong></div>`);
+  }
+  return items.join('');
+}
+
+function updateMapping(field, value) {
+  const val = parseInt(value, 10);
+  currentPreview.mapping[field] = val;
+  const allSpecial = ['id', 'name', 'average', 'grade'].map(k => currentPreview.mapping[k]);
+  currentPreview.mapping.subjects = currentPreview.headers.map((_, i) => i).filter(i => !allSpecial.includes(i));
+  const select = document.getElementById('map-' + field);
+  if (select) select.classList.toggle('auto-detected', val !== -1);
+  renderPreviewContent();
+}
+
+function confirmImport() {
+  const { dataRows, mapping, file, dept, sem } = currentPreview;
+  const isAr = currentLang === 'ar';
+  if (mapping.id === -1) { showToast(isAr ? '⚠️ حدد عمود "رقم القيد"' : '⚠️ Select ID column', 'error'); return; }
+  const students = [];
+  const seenIds = new Set();
+  let skipped = 0;
+  dataRows.forEach(row => {
+    const idRaw = row[mapping.id];
+    if (idRaw === undefined || idRaw === null || String(idRaw).trim() === '') { skipped++; return; }
+    const id = String(idRaw).trim();
+    if (seenIds.has(id)) { skipped++; return; }
+    seenIds.add(id);
+    const student = {
+      id,
+      name: mapping.name !== -1 ? String(row[mapping.name] || '').trim() : '',
+      subjects: {},
+      average: mapping.average !== -1 ? (row[mapping.average] || '') : '',
+      grade: mapping.grade !== -1 ? String(row[mapping.grade] || '').trim() : ''
+    };
+    (mapping.subjects || []).forEach(colIdx => {
+      const headerName = currentPreview.headers[colIdx];
+      const value = row[colIdx];
+      if (headerName && value !== undefined && value !== null && String(value).trim() !== '') {
+        student.subjects[headerName] = value;
+      }
+    });
+    students.push(student);
+  });
+  if (!students.length) { showToast(isAr ? '❌ لم يتم استيراد أي طالب' : '❌ No students imported', 'error'); return; }
+  STUDENTS[dept][sem] = students;
+  FILE_META[dept][sem] = { fileName: file.name, uploadedAt: new Date().toISOString(), count: students.length };
+  CHANGED[dept][sem] = true;
+  showToast(isAr ? `✅ تم رفع ${students.length} طالب` : `✅ ${students.length} students uploaded`, 'success');
+  closePreviewModal();
+  renderAdminDeptContent();
+  updateGrandTotal();
+  renderAllTermTabs();
+  const fileInput = document.getElementById(`file-${dept}-${sem}`);
+  if (fileInput) fileInput.value = '';
+}
+
+function closePreviewModal() {
+  document.getElementById('previewModal').classList.remove('open');
+  currentPreview = null;
+}
+document.getElementById('closePreview').addEventListener('click', closePreviewModal);
+document.getElementById('previewModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('previewModal')) closePreviewModal();
+});
+
+function clearSemester(dept, sem) {
+  const isAr = currentLang === 'ar';
+  if (!confirm(isAr ? `حذف بيانات ${t(SEMESTERS[sem])} من ${t(DEPARTMENTS[dept])}؟` : `Delete data?`)) return;
+  STUDENTS[dept][sem] = [];
+  FILE_META[dept][sem] = { fileName: null, uploadedAt: null, count: 0 };
+  CHANGED[dept][sem] = true;
+  renderAdminDeptContent();
+  updateGrandTotal();
+  renderAllTermTabs();
+}
+
+/* =================================================================
+   توليد HTML جديد
+   ================================================================= */
+function generateNewHTML() {
+  const isAr = currentLang === 'ar';
+  adminModal.classList.remove('open');
+  document.getElementById('previewModal').classList.remove('open');
+  annEditorModal.classList.remove('open');
+  document.querySelectorAll('.result-area').forEach(el => el.innerHTML = '');
+
+  setTimeout(() => {
+    const clone = document.documentElement.cloneNode(true);
+
+    // استبدال البيانات
+    const dataScript = clone.querySelector('#embeddedData');
+    if (dataScript) dataScript.textContent = '\n' + JSON.stringify(STUDENTS, null, 2) + '\n';
+
+    const annScript = clone.querySelector('#embeddedAnnouncements');
+    if (annScript) annScript.textContent = '\n' + JSON.stringify(ANNOUNCEMENTS, null, 2) + '\n';
+
+    const settingsScript = clone.querySelector('#embeddedSettings');
+    if (settingsScript) settingsScript.textContent = '\n' + JSON.stringify({ resultsVisible: RESULTS_VISIBLE }, null, 2) + '\n';
+
+    // تنظيف الحالة الديناميكية
+    const cleanups = [
+      ['#adminPanel', el => el.classList.remove('active')],
+      ['#loginScreen', el => el.style.display = 'block'],
+      ['#loginError', el => el.textContent = ''],
+      ['#adminPassword', el => el.value = ''],
+      ['#toast', el => el.classList.remove('show')],
+      ['#header', el => el.classList.remove('scrolled')],
+      ['#navLinks', el => el.classList.remove('open')],
+      ['#adminModal', el => el.classList.remove('open')],
+      ['#previewModal', el => el.classList.remove('open')],
+      ['#annEditorModal', el => el.classList.remove('open')]
+    ];
+    cleanups.forEach(([sel, fn]) => {
+      const el = clone.querySelector(sel);
+      if (el) fn(el);
+    });
+    clone.querySelectorAll('.result-area').forEach(el => el.innerHTML = '');
+
+    const html = '<!DOCTYPE html>\n' + clone.outerHTML;
+    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'index.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    // إعادة فتح اللوحة
+    adminModal.classList.add('open');
+    adminPanel.classList.add('active');
+    loginScreen.style.display = 'none';
+
+    // إعادة تعيين العلامات
+    Object.keys(DEPARTMENTS).forEach(dept => {
+      SEMESTER_KEYS.forEach(sem => {
+        CHANGED[dept][sem] = false;
+        if (STUDENTS[dept][sem].length > 0) {
+          FILE_META[dept][sem].fileName = 'مدمج في HTML';
+        }
+      });
+    });
+    ANN_CHANGED = false;
+    VISIBILITY_CHANGED = false;
+    renderAdminContent();
+
+    showToast(isAr ? '✅ تم توليد الملف — ارفعه للاستضافة' : '✅ File generated — upload to hosting', 'success');
+  }, 300);
+}
+
+document.getElementById('generateBtn').addEventListener('click', generateNewHTML);
+
+/* =================================================================
+   التشغيل
+   ================================================================= */
+(function init() {
+  const savedLang = localStorage.getItem(LANG_KEY) || 'ar';
+  setLanguage(savedLang);
+  renderAnnouncements();
+  renderAllTermTabs();
+  applyResultsVisibility();
+  renderAdminDeptTabs();
+  renderAdminContent();
+  updateGrandTotal();
+  initStats();
+})();
+</script>
+
+
+
+```</body></html>
